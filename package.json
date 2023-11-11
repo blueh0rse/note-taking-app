@@ -1,0 +1,22 @@
+{
+  "name": "note-taking-app",
+  "version": "0.1.0",
+  "description": "Application Security Project 2023",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blueh0rse/note-taking-app.git"
+  },
+  "author": "",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/blueh0rse/note-taking-app/issues"
+  },
+  "homepage": "https://github.com/blueh0rse/note-taking-app#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
