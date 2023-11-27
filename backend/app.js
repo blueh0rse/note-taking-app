@@ -2,6 +2,7 @@
 
 // secret management
 require("dotenv").config();
+
 // database connection
 require("./database/db_connect.js");
 
@@ -24,8 +25,10 @@ app.get("/", (req, res) => {
 // routes
 const usersRoutes = require("./routes/users.routes.js");
 const notesRoutes = require("./routes/notes.routes.js");
+const groupsRoutes = require("./routes/groups.routes.js");
 app.use("/users", usersRoutes);
 app.use("/notes", notesRoutes);
+app.use("/groups", groupsRoutes);
 
 const server = http.createServer(app);
 
