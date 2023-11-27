@@ -23,8 +23,9 @@ app.get("/", (req, res) => {
 
 // routes
 const usersRoutes = require("./routes/users.routes.js");
+const notesRoutes = require("./routes/notes.routes.js");
 app.use("/users", usersRoutes);
-
+app.use("/notes", notesRoutes);
 
 const server = http.createServer(app);
 
