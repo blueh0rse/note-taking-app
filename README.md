@@ -6,7 +6,7 @@
 
 A free note-taking app.
 
-## Development
+## Backend Development
 
 ### Prerequisites
 
@@ -73,3 +73,6 @@ $ sudo mongod --dbpath ~/data/db --config ./database/mongo.conf
 
 Now you can access the instance by running the `mongosh` command or by accessing it using any other way (VSCode extension for example).
 
+## Frontend Development
+
+...
