@@ -1,27 +1,25 @@
 "use strict";
 
 // database connexion
-require("./database");
+require("./database/database.js");
 // secret management
 require("dotenv").config();
 
+const cors = require("cors");
 const http = require("http");
 const express = require("express");
-const mongoose = require("mongoose");
-
-// routes
-const usersRoutes = require("./routes/user.routes.js");
-
-// middlewares
-const authMiddleware = require("./middlewares/auth.middle.js");
-
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 
-app.use(authMiddleware);
+// routes
+const usersRoutes = require("./routes/user.routes.js");
 app.use("/users", usersRoutes);
+
+// middlewares
+const authMiddleware = require("./middlewares/auth.middle.js");
+app.use(authMiddleware);
 
 app.get("/", (req, res) => {
   response.send("<h1>Hello Express!</h1>");

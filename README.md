@@ -8,6 +8,8 @@ A free note-taking app.
 
 ## Development
 
+### Prerequisites
+
 Follow these steps to be able to help developing the project:
 
 Verify you have `node` and `npm`
@@ -47,3 +49,27 @@ Run the server:
 $ node server.js
 Listening on port 3000
 ````
+
+### Launch Mongodb local instance
+
+First be sure mongodb is correctly installed:
+
+````bash
+$ sudo apt update
+$ sudo apt-get install -y mongodb-org
+````
+
+Create the data directory:
+
+````bash
+$ cd && sudo mkdir -p data/db
+````
+
+Then start the mongo daemon:
+
+````bash
+$ sudo mongod --dbpath ~/data/db --config ./database/mongo.conf
+````
+
+Now you can access the instance by running the `mongosh` command or by accessing it using any other way (VSCode extension for example).
+
