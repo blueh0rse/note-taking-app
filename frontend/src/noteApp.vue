@@ -2,6 +2,7 @@
   <div id="app">
     <AppNavbar />
     <div class="container">
+      <LoginForm /> <!-- Aggiungi il componente Login qui -->
       <NoteList :notes="notes" @selectNote="selectNote" />
       <NoteEditor :selectedNote="selectedNote" @saveNote="saveNote" />
     </div>
@@ -12,13 +13,15 @@
 import AppNavbar from './AppNavbar.vue';
 import NoteList from './NoteList.vue';
 import NoteEditor from './NoteEditor.vue';
+import LoginForm from "./LoginForm.vue";
 
 export default {
   name: 'NoteApp',
   components: {
     AppNavbar,
     NoteList,
-    NoteEditor
+    NoteEditor,
+    LoginForm
   },
   data() {
     return {
