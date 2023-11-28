@@ -10,6 +10,7 @@ const cors = require("cors");
 const http = require("http");
 const express = require("express");
 const app = express();
+
 const port = process.env.SERVER_PORT;
 
 app.use(express.json());
