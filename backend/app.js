@@ -39,7 +39,7 @@ app.use("/groups", groupsRoutes);
 const httpsOptions = {
   key: server_key,
   cert: server_cert,
-  passphrase: "abc123"
+  passphrase: process.env.SERVER_PASS
 };
 
 const server = https.createServer(httpsOptions, app);
