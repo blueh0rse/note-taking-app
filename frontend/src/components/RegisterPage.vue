@@ -1,5 +1,5 @@
 <template>
-<img class="logo" src="../assets/logo.png"/>
+<img class="logo" src="../assets/logo3.png"/>
 <h1>Sign Up</h1>
 <div class="register">
     <input type="text" placeholder="Enter your Email" />

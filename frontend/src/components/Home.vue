@@ -1,17 +1,19 @@
 <template>
+    <div class="bkg">
     <div class="regis">
-     <h1>Hello User, Welcome on NoteApp</h1>
+     <h1>Hello User, Welcome on Zotion</h1>
      
     </div>
     
 <div class="reg">
-    <img class="logo" src="../assets/logo.png"/>
+    <img class="logo" src="../assets/logo3.png"/>
     <p>
         <router-link to="/login" class="link">Login</router-link>
     </p>
     <p>
         <router-link to="/signup" class="link">Sign Up</router-link>
     </p>
+</div>
 </div>
 </template>
 
@@ -25,7 +27,7 @@ export default {
 
 .regis {
     text-align: center; /* Centra il testo orizzontalmente */
-    background-color: #f0f0f0; /* Aggiunge un colore di sfondo */
+    background-color:rgb(30, 23, 40); /* Aggiunge un colore di sfondo */
     padding: 20px; /* Aggiunge spazio interno al contenitore */
     border-radius: 10px; /* Aggiunge angoli arrotondati per un aspetto più elegante */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Aggiunge una leggera ombra */
@@ -33,7 +35,7 @@ export default {
 
 .regis h1 {
     font-size: 24px; /* Imposta la dimensione del carattere desiderata */
-    color: #333; /* Imposta il colore del testo */
+    color: #ffffff; /* Imposta il colore del testo */
     margin: 0; /* Rimuove il margine predefinito del titolo */
 }
 
@@ -43,7 +45,7 @@ export default {
     flex-direction: column;
     justify-content: center; /* Centra verticalmente */
     align-items: center; /* Centra orizzontalmente */
-    height: 60vh; /* Imposta l'altezza al 100% della viewport */
+    height: 70vh; /* Imposta l'altezza al 100% della viewport */
 }
 
 .link {
@@ -66,5 +68,8 @@ export default {
     height: auto; /* Mantieni l'aspetto proporzionale durante il ridimensionamento */
 }
 
+.bkg {
+    background-color:rgb(13, 16, 39);
+}
 
 </style>
