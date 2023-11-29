@@ -49,7 +49,7 @@ export default {
   methods: {
     handleSubmit() {
       if (this.isFormValid) {
-        axios.post('/users', {
+        axios.post('http://localhost:3000/users', {
           username: this.username,
           email: this.email,
           password: this.password
@@ -58,8 +58,7 @@ export default {
           // Example: handle success
           console.log('Registration successful', response);
           alert('Registration successful!');
-          // Optionally redirect the user to the login page or dashboard
-          // this.$router.push('/login');
+          this.$router.push('/login');
         })
         .catch(error => {
             console.error('Registration error:', error);
@@ -87,6 +86,15 @@ export default {
 
 
 <style>
+input, textarea {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
 .error-message {
   color: red;
   font-size: 0.8em;

@@ -54,7 +54,13 @@ export default {
 
   
 <style>
-  /* Add styling for the create note form */
-  
+input, textarea {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}  
 </style>
   
