@@ -7,9 +7,14 @@ require("dotenv").config();
 require("./database/db_connect.js");
 
 const cors = require("cors");
-const http = require("http");
+// const http = require("http");
+const https = require('https');
 const express = require("express");
 const app = express();
+const fs = require('fs');
+
+const server_key = fs.readFileSync('./certificates/webserver.key.pem');
+const server_cert = fs.readFileSync('./certificates/webserver.crt.pem');
 
 const port = process.env.SERVER_PORT;
 
@@ -31,7 +36,13 @@ app.use("/users", usersRoutes);
 app.use("/notes", notesRoutes);
 app.use("/groups", groupsRoutes);
 
-const server = http.createServer(app);
+const httpsOptions = {
+  key: server_key,
+  cert: server_cert,
+  passphrase: "abc123"
+};
+
+const server = https.createServer(httpsOptions, app);
 
 server.listen(port);
 server.on("listening", onListening);
