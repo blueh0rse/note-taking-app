@@ -1,28 +1,23 @@
 <template>
-  <div id="app">
-    <div class="container">
-      <RegisterPage />
-      <LoginForm /> <!-- Aggiungi il componente Login qui -->
-      
-    </div>
-  </div>
+  <router-view />
 </template>
 
 <script>
 //import AppNavbar from './AppNavbar.vue';
 //import NoteList from './components/NoteList.vue';
 //import NoteEditor from './components/NoteEditor.vue';
-//import LoginForm from './components/LoginForm.vue';
-import RegisterPage from './components/RegisterPage.vue';
-
+// import LoginForm from './components/LoginForm.vue';
+// import RegisterPage from './components/RegisterPage.vue';
+// import HomePage from './components/Home.vue';
 export default {
-  name: 'NoteApp',
+  name: 'App',
   components: {
     //AppNavbar,
     //NoteList,
     //NoteEditor,
-    RegisterPage
-    //LoginForm
+    // RegisterPage,
+    // LoginForm,
+    // HomePage
   },
   data() {
     return {

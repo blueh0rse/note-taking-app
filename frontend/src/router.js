@@ -1,19 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import NoteApp from './noteApp.vue'; // Assicurati che il percorso sia corretto
-//import LoginForm from './components/LoginForm.vue'
-import RegisterPage from './components/RegisterPage'
+import LoginForm from './components/LoginForm.vue';
+import RegisterPage from './components/RegisterPage.vue';
+
 const routes = [
-  { path: '/home', component: NoteApp },
-
- // { path: '/login', component: LoginForm },
-
-  { path: '/register', component: RegisterPage },
-
-];
-
-const router = createRouter({
-  history: createWebHistory(),
-  routes
+    {
+      path: '/login',
+      name: 'Login',
+      component: LoginForm,
+    },
+    {
+      path: '/signup',
+      name: 'SignUp',
+      component: RegisterPage,
+    },
+    // ... other routes
+  ];
+  const router =createRouter({
+    history: createWebHistory(),
+    routes,
 });
 
 export default router;
