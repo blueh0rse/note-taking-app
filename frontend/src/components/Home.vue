@@ -6,7 +6,7 @@
     </div>
     
 <div class="reg">
-    <img class="logo" src="../assets/logo3.png"/>
+    <img class="logo" src="../assets/logo4.png"/>
     <p>
         <router-link to="/login" class="link">Login</router-link>
     </p>
@@ -27,7 +27,7 @@ export default {
 
 .regis {
     text-align: center; /* Centra il testo orizzontalmente */
-    background-color:rgb(30, 23, 40); /* Aggiunge un colore di sfondo */
+    background-color:rgb(46, 38, 38); /* Aggiunge un colore di sfondo */
     padding: 20px; /* Aggiunge spazio interno al contenitore */
     border-radius: 10px; /* Aggiunge angoli arrotondati per un aspetto più elegante */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Aggiunge una leggera ombra */
@@ -69,7 +69,7 @@ export default {
 }
 
 .bkg {
-    background-color:rgb(13, 16, 39);
+    background-color:rgb(15, 14, 14);
 }
 
 </style>
