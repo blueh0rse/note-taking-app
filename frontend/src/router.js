@@ -1,9 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import NoteApp from './noteApp.vue'; // Assicurati che il percorso sia corretto
-
+//import LoginForm from './components/LoginForm.vue'
+import RegisterPage from './components/RegisterPage'
 const routes = [
-  { path: '/', component: NoteApp },
-  // Aggiungi altre rotte qui se necessario
+  { path: '/home', component: NoteApp },
+
+ // { path: '/login', component: LoginForm },
+
+  { path: '/register', component: RegisterPage },
+
 ];
 
 const router = createRouter({

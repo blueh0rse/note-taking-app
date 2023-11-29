@@ -1,27 +1,28 @@
 <template>
   <div id="app">
-    <AppNavbar />
     <div class="container">
+      <RegisterPage />
       <LoginForm /> <!-- Aggiungi il componente Login qui -->
-      <NoteList :notes="notes" @selectNote="selectNote" />
-      <NoteEditor :selectedNote="selectedNote" @saveNote="saveNote" />
+      
     </div>
   </div>
 </template>
 
 <script>
-import AppNavbar from './AppNavbar.vue';
-import NoteList from './NoteList.vue';
-import NoteEditor from './NoteEditor.vue';
-import LoginForm from "./LoginForm.vue";
+//import AppNavbar from './AppNavbar.vue';
+//import NoteList from './components/NoteList.vue';
+//import NoteEditor from './components/NoteEditor.vue';
+//import LoginForm from './components/LoginForm.vue';
+import RegisterPage from './components/RegisterPage.vue';
 
 export default {
   name: 'NoteApp',
   components: {
-    AppNavbar,
-    NoteList,
-    NoteEditor,
-    LoginForm
+    //AppNavbar,
+    //NoteList,
+    //NoteEditor,
+    RegisterPage
+    //LoginForm
   },
   data() {
     return {
@@ -45,9 +46,12 @@ export default {
 
 <style>
 /* Aggiungi qui gli stili CSS */
-.container {
-  display: flex;
-  justify-content: space-between;
+#noteApp {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+
 }
 </style>
 
