@@ -46,6 +46,7 @@
       background: skyblue;
       color: white;
       cursor: pointer;
+      background-color: #0056b3;
     }
     
     </style>
