@@ -31,7 +31,7 @@ import DeleteAccount from './DeleteAccount.vue';
 import CreateNote from './CreateNote.vue';
 
 export default {
-  name: 'NoteApp',
+  name: 'App',
   components: {
     AppNavbar,
     NoteList,
@@ -157,9 +157,12 @@ a:hover, button:hover {
   /* Other navbar styles */
 }
 /* Aggiungi qui gli stili CSS */
-.container {
-  display: flex;
-  justify-content: space-between;
+#noteApp {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+
 }
 </style>
 
