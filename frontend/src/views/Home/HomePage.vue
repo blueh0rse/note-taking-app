@@ -1,17 +1,17 @@
 <template>
     <div class="home-page">
-      <!-- Homepage content goes here -->
+        <Navbar />
+        <!-- Rest of the homepage content -->
     </div>
-  </template>
-  
-  <script>
-  export default {
+</template>
+<script>
+import Navbar from '@/components/Navbar.vue'
+
+export default {
     name: 'HomePage',
-    // Component logic goes here
-  }
-  </script>
-  
-  <style scoped src="./HomeStyles.css">
-  /* CSS specific to HomePage */
-  </style>
+    components: {
+        Navbar
+    }
+}
+</script>
   
