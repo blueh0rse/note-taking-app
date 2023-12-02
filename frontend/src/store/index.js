@@ -8,6 +8,21 @@ const state = {
 };
 
 export default new Vuex.Store({
-  state,
-  // other store options like mutations, actions, getters
+  state: {
+    isAuthenticated: false,
+    // other state properties
+  },
+  mutations: {
+    setAuthentication(state, status) {
+      state.isAuthenticated = status;
+    },
+    // other mutations
+  },
+  actions: {
+    login({ commit }, credentials) {
+      // Perform login and commit authentication status
+    },
+    // other actions
+  },
+  // getters
 });
