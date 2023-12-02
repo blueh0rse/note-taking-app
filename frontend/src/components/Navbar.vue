@@ -17,6 +17,24 @@
   </script>
   
   <style>
-  /* Navbar styling */
+nav {
+  background-color: #2a3f54;
+  padding: 10px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  color: #ffa500;
+}
   </style>
   
