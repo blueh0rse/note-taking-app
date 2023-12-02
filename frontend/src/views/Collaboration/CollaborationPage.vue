@@ -9,14 +9,31 @@
 </template>
   
 <script>
+import apiService from '@/services/apiService.js';
+
 export default {
     data() {
         return {
             sharedNotes: [] // This will be fetched from backend
         };
     },
-    // Additional methods for collaboration features
+    methods: {
+    fetchSharedNotes() {
+      apiService.getSharedNotes()
+        .then(response => {
+          this.sharedNotes = response.data;
+        })
+        .catch(error => {
+          // Error handling
+        });
+    },
+    // Additional methods for real-time collaboration features
+  },
+  mounted() {
+    this.fetchSharedNotes();
+  }
 }
+
 </script>
   
 <style scoped src="./CollaborationStyles.css">

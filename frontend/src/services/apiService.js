@@ -10,6 +10,8 @@ export default {
   },
   updateProfile(profileData) {
     return axios.put('/api/user/profile', profileData);
-  }
-  // Other API methods
+  },
+  getSharedNotes() {
+    return axios.get('/api/shared-notes');
+  },
 }
