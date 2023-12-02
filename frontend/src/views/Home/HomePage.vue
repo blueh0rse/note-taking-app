@@ -10,6 +10,7 @@
   
 <script>
 import Navbar from '@/components/Navbar.vue'
+import authService from '@/services/authService';
 
 export default {
     name: 'HomePage',
@@ -24,8 +25,14 @@ export default {
     };
   },
   methods: {
-    handleAuth() {
-      // Authentication logic
+    async handleAuth() {
+      try {
+        const response = await authService.login(this.username, this.password);
+        // Handle successful authentication
+        // Update user state or redirect
+      } catch (error) {
+        // Handle errors
+      }
     }
   }
 }
