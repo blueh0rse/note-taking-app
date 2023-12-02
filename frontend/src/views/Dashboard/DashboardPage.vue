@@ -9,6 +9,7 @@
   
 <script>
 import NoteCard from '@/components/NoteCard.vue';
+import apiService from '@/services/apiService.js';
 
 export default {
     name: 'DashboardPage',
@@ -20,10 +21,22 @@ export default {
             notes: [] // This will be fetched from backend
         };
     },
+    mounted() {
+        this.getNotes();
+    },
     methods: {
         createNote() {
             // Logic to create a new note
-        }
+        },
+        getNotes() {
+            apiService.getNotes()
+                .then(response => {
+                    this.notes = response.data;
+                })
+                .catch(error => {
+                    // Handle errors
+                });
+        },
     }
 }
 </script>
