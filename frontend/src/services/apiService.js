@@ -4,6 +4,12 @@ export default {
   },
   getNote(id) {
     return axios.get(`/api/notes/${id}`);
+  },
+  getProfile() {
+    return axios.get('/api/user/profile');
+  },
+  updateProfile(profileData) {
+    return axios.put('/api/user/profile', profileData);
   }
   // Other API methods
 }

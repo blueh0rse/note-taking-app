@@ -11,6 +11,8 @@
   
   
 <script>
+import apiService from '@/services/apiService.js';
+
 export default {
   data() {
     return {
@@ -22,9 +24,27 @@ export default {
     };
   },
   methods: {
+    loadProfile() {
+      apiService.getProfile()
+        .then(response => {
+          this.userProfile = response.data;
+        })
+        .catch(error => {
+          // Handle errors
+        });
+    },
     updateProfile() {
-      // Logic to update profile details
+      apiService.updateProfile(this.userProfile)
+        .then(response => {
+          // Handle successful update
+        })
+        .catch(error => {
+          // Handle errors
+        });
     }
+  },
+  mounted() {
+    this.loadProfile();
   }
 }
 </script>
