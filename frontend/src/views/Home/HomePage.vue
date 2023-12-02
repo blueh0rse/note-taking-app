@@ -1,9 +1,11 @@
 <template>
     <div class="home-page">
-        <Navbar />
-        <!-- Rest of the homepage content -->
+      <Navbar />
+      <LoginSignup />
+      <!-- Other homepage content -->
     </div>
-</template>
+  </template>
+  
 <script>
 import Navbar from '@/components/Navbar.vue'
 
