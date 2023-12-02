@@ -1,13 +1,27 @@
 <template>
     <div class="note-editor">
-        <!-- Note editor content goes here -->
+      <vue-quill-editor v-model="noteContent"></vue-quill-editor>
+      <button @click="saveNote">Save Note</button>
     </div>
-</template>
+  </template>  
   
 <script>
+import VueQuillEditor from 'vue-quill-editor';
+import 'quill/dist/quill.core.css';
+import 'quill/dist/quill.snow.css';
+
 export default {
     name: 'NoteEditorPage',
-    // Component logic goes here
+    data() {
+    return {
+      noteContent: ''
+    };
+  },
+  methods: {
+    saveNote() {
+      // Logic to save the note content
+    }
+  }
 }
 </script>
   
