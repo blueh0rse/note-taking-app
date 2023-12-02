@@ -1,8 +1,9 @@
-import axios from 'axios';
-
 export default {
-  getNotes() {
-    return axios.get('/api/notes');
+  saveNote(noteContent) {
+    return axios.post('/api/notes', { content: noteContent });
   },
-  // Other functions for POST, PUT, DELETE requests
+  getNote(id) {
+    return axios.get(`/api/notes/${id}`);
+  }
+  // Other API methods
 }

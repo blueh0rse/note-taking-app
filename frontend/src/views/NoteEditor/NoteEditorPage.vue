@@ -9,6 +9,7 @@
 import VueQuillEditor from 'vue-quill-editor';
 import 'quill/dist/quill.core.css';
 import 'quill/dist/quill.snow.css';
+import apiService from '@/services/apiService.js';
 
 export default {
     name: 'NoteEditorPage',
@@ -19,8 +20,20 @@ export default {
   },
   methods: {
     saveNote() {
-      // Logic to save the note content
+      apiService.saveNote(this.noteContent)
+        .then(response => {
+          // Handle successful save
+        })
+        .catch(error => {
+          // Handle errors
+        });
+    },
+    loadNote() {
+      // Method to load a note's content from the backend
     }
+  },
+  mounted() {
+    this.loadNote();
   }
 }
 </script>
