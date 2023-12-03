@@ -35,7 +35,7 @@ const usersRoutes = require("./routes/users.routes.js");
 const notesRoutes = require("./routes/notes.routes.js");
 const groupsRoutes = require("./routes/groups.routes.js");
 
-app.use("/auth", authRoutes);
+app.use("/", authRoutes);
 app.use("/users", usersRoutes);
 app.use("/notes", notesRoutes);
 app.use("/groups", groupsRoutes);
