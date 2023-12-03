@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const bcrypt = require("bcrypt");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/users.model.js");
 const Group = require("../models/groups.model.js");
@@ -14,7 +14,7 @@ const passwordValidationRegex =
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    
+
     // Check if email and password are provided
     if (!email || !password) {
       return res
@@ -45,16 +45,15 @@ exports.loginUser = async (req, res) => {
     }
 
     // generate JWT token
-    const token = jwt.sign({ id: user.email }, process.env.JWT_SECRET, { expiresIn: "2h" });
+    const token = jwt.sign({ id: user.email }, process.env.JWT_SECRET, {
+      expiresIn: "2h",
+    });
 
     res.status(200).send({ message: "Login successful", token });
   } catch (error) {
     res.status(500).send({ message: "Server error", error });
   }
 };
-
-// logout a user
-exports.logoutUser = async (req, res) => {};
 
 // create a user
 exports.createUser = async (req, res) => {
