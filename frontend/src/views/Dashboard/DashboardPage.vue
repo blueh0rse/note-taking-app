@@ -34,7 +34,7 @@ export default {
                     this.notes = response.data;
                 })
                 .catch(error => {
-                    // Handle errors
+                    this.getNotesError = 'Couldn\' get notes: ' + (error.response.data.message || 'Unknown error');
                 });
         },
     }

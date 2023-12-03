@@ -11,7 +11,7 @@
   
   <script>
   export default {
-    name: 'Navbar',
+    name: 'Nav-bar',
     // Additional script logic
   }
   </script>

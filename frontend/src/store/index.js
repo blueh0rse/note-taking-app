@@ -1,11 +1,8 @@
-import Vue from 'vue';
 import Vuex from 'vuex';
 
-Vue.use(Vuex);
-
-const state = {
+/*const state = {
   // Define initial application state
-};
+};*/
 
 export default new Vuex.Store({
   state: {
@@ -18,11 +15,15 @@ export default new Vuex.Store({
     },
     // other mutations
   },
-  actions: {
+  /*actions: {
     login({ commit }, credentials) {
       // Perform login and commit authentication status
     },
     // other actions
-  },
+  },*/
   // getters
 });
+
+<script>
+  
+</script>

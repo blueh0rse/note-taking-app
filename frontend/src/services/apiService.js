@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default {
   saveNote(noteContent) {
     return axios.post('/api/notes', { content: noteContent });
