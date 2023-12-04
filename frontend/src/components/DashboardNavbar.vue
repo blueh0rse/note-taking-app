@@ -1,8 +1,8 @@
 <template>
   <nav class="navbar">
     <ul>
-      <li><router-link to="/">Show Notes</router-link></li>
-      <button @click="emitCreateNoteEvent">Create Note</button>
+      <li><button @click="emitShowNotesEvent">Show Notes</button></li>
+      <li><button @click="emitCreateNoteEvent">Create Note</button></li>
       <li><router-link to="/profile">Profile</router-link></li>
     </ul>
   </nav>
@@ -13,9 +13,12 @@ export default {
   name: 'DashboardNavbar',
 
   methods: {
+    emitShowNotesEvent() {
+      this.$emit('show-notes');
+    },
     emitCreateNoteEvent() {
       this.$emit('create-note');
-    }
+    },
   }
 }
 </script>

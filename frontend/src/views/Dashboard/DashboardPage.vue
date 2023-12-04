@@ -1,5 +1,5 @@
 <template>
-    <DashboardNavbar @create-note="showCreateNoteForm" />
+    <DashboardNavbar @create-note="showCreateNoteForm" @show-notes="showNotesList" />
     <div v-if="isCreateNoteVisible" class="create-note-form">
         <h2>Create New Note</h2>
         <form @submit.prevent="createNote">
@@ -66,6 +66,14 @@ export default {
             } catch (error) {
                 this.createNoteMessage = `Failed to fetch notes: ${error.message}`;
             }
+        },
+        showNotesList() {
+            this.isCreateNoteVisible = false;
+            this.newNoteTitle = '';
+            this.newNoteContent = '';
+            this.createNoteMessage = '';
+            this.selectedNote = null;
+            this.editingNote = null;
         },
         selectNoteForEdit(note) {
             if (note) {
@@ -155,6 +163,7 @@ export default {
             this.newNoteTitle = '';
             this.newNoteContent = '';
             this.createNoteMessage = '';
+            this.editingNote = null;
         },
         cancelEdit() {
             this.editingNote = null;
