@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar">
     <ul>
-      <li><button @click="emitShowNotesEvent">Show Notes</button></li>
-      <li><button @click="emitCreateNoteEvent">Create Note</button></li>
-      <li><button @click="emitLogoutEvent">Logout</button></li>
+      <li><button @click="emitShowNotesEvent" class="custom-button">Show Notes</button></li>
+      <li><button @click="emitCreateNoteEvent" class="custom-button">Create Note</button></li>
+      <li><button @click="emitLogoutEvent" class="custom-button">Logout</button></li>
     </ul>
   </nav>
 </template>
@@ -27,28 +27,37 @@ export default {
 </script>
 
 <style scoped>
+.custom-button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin-right: 20px; 
+}
+
+.custom-button:last-child {
+  margin-right: 0; /* Rimuove il margine a destra dell'ultimo bottone */
+}
+
+.custom-button:hover {
+  background-color: #0056b3;
+}
+
 .navbar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #333;
+  display: flex;
 }
 
 .navbar li {
-  float: left;
+  margin: 0;
+  padding: 0;
 }
-
-.navbar li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.navbar li a:hover {
-  background-color: #111;
-}
-
 </style>
