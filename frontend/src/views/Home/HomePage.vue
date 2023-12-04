@@ -4,7 +4,7 @@
     <h2 v-if="!isSignupVisible">Login</h2>
     <h2 v-if="isSignupVisible">Sign Up</h2>
     <form @submit.prevent="login" v-if="!isSignupVisible">
-      <input type="text" v-model="loginIdentifier" placeholder="Email or Username" required />
+      <input type="text" v-model="user_email" placeholder="Email" required />
       <input type="password" v-model="password" placeholder="Password" required />
       <p v-if="loginError" class="error">{{ loginError }}</p>
       <button type="submit">Login</button>
@@ -33,7 +33,7 @@ import authService from '@/services/authService';
 export default {
   data() {
     return {
-      loginIdentifier: '',
+      user_email: '',
       password: '',
       isSignupVisible: false,
       signupUsername: '',
@@ -47,7 +47,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await authService.login(this.loginIdentifier, this.loginPassword);
+        const response = await authService.login(this.user_email, this.password);
         this.loginError = ''; // Clear any previous error
         this.$store.commit('setUser', response.data.user); // Update Vuex store
         this.$router.push('/dashboard'); // Redirect to dashboard
@@ -82,7 +82,7 @@ export default {
       this.isSignupVisible = false;
     },
     resetLoginForm() {
-      this.loginIdentifier = '';
+      this.user_email = '';
       this.loginPassword = '';
       this.loginError = '';
     },
