@@ -1,0 +1,11 @@
+.note-editor {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.ql-container {
+    min-height: 300px;
+    /* Adjust based on preference */
+}
