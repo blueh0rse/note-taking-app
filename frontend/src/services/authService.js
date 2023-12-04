@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://yourapi.com/auth'; // Replace with your API URL
+const API_URL = 'https://localhost:3000'; // Replace with your API URL
 
 export default {
   login(username, password) {
