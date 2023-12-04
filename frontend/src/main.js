@@ -17,8 +17,10 @@ import DashboardPage from './views/Dashboard/DashboardPage.vue'; // import other
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        { path: '/', component: HomePage },
-        { path: '/dashboard', component: DashboardPage } // other routes
+        //{ path: '/', component: HomePage },
+        //{ path: '/dashboard', component: DashboardPage } // other routes
+        { path: '/home', component: HomePage },
+        { path: '/', component: DashboardPage } // other routes
     ]
 });
 
