@@ -170,12 +170,17 @@ export default {
             this.createNoteMessage = '';
         },
         logout() {
-            // Clear user session, local storage, or Vuex state as necessary
-            // For example, if using Vuex:
-            // this.$store.dispatch('logout');
+            // Clear Vuex state related to user/authentication
+            this.$store.commit('setAuthenticated', false);
+            // If you have other user-related state in Vuex, reset it here
+            // Example: this.$store.commit('setUserData', null);
+
+            // Clear local storage or session storage if you use them
+            localStorage.removeItem('authToken');  // Replace 'authToken' with your token's key
+            // Similarly for any other user-related data stored in localStorage or sessionStorage
 
             // Redirect to the login page
-            this.$router.push('/home');
+            this.$router.push('/');
         },
     }
 }

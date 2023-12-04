@@ -6,15 +6,16 @@ import Vuex from 'vuex';
 
 export default new Vuex.Store({
   state: {
-    isAuthenticated: false,
-    // other state properties
+    isAuthenticated: true,
   },
   mutations: {
     setAuthentication(state, status) {
       state.isAuthenticated = status;
     },
-    // other mutations
   },
+  getters: {
+    isAuthenticated: state => state.isAuthenticated,
+  }
   /*actions: {
     login({ commit }, credentials) {
       // Perform login and commit authentication status
@@ -23,7 +24,3 @@ export default new Vuex.Store({
   },*/
   // getters
 });
-
-<script>
-  
-</script>
