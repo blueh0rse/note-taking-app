@@ -2,7 +2,7 @@
   <nav class="navbar">
     <ul>
       <li><router-link to="/">Show Notes</router-link></li>
-      <li><router-link to="/create-note">Create Note</router-link></li>
+      <button @click="emitCreateNoteEvent">Create Note</button>
       <li><router-link to="/profile">Profile</router-link></li>
     </ul>
   </nav>
@@ -10,7 +10,13 @@
 
 <script>
 export default {
-  name: 'DashboardNavbar'
+  name: 'DashboardNavbar',
+
+  methods: {
+    emitCreateNoteEvent() {
+      this.$emit('create-note');
+    }
+  }
 }
 </script>
 
