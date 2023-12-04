@@ -1,5 +1,6 @@
 <template>
     <div class="dashboard">
+        <DashboardNavbar />
         <button @click="createNote">Create Note</button>
         <div class="notes-grid">
             <NoteCard v-for="note in notes" :key="note.id" :note="note" />
@@ -8,13 +9,15 @@
 </template>
   
 <script>
+import DashboardNavbar from '@/components/DashboardNavbar.vue';
 import NoteCard from '@/components/NoteCard.vue';
 import apiService from '@/services/apiService.js';
 
 export default {
     name: 'DashboardPage',
     components: {
-        NoteCard
+        NoteCard,
+        DashboardNavbar,
     },
     data() {
         return {
