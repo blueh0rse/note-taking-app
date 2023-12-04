@@ -3,7 +3,7 @@
     <ul>
       <li><button @click="emitShowNotesEvent">Show Notes</button></li>
       <li><button @click="emitCreateNoteEvent">Create Note</button></li>
-      <li><router-link to="/profile">Profile</router-link></li>
+      <li><button @click="emitLogoutEvent">Logout</button></li>
     </ul>
   </nav>
 </template>
@@ -18,6 +18,9 @@ export default {
     },
     emitCreateNoteEvent() {
       this.$emit('create-note');
+    },
+    emitLogoutEvent() {
+      this.$emit('logout');
     },
   }
 }

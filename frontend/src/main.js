@@ -33,7 +33,7 @@ router.beforeEach((to, from, next) => {
     }
 });
 
-export default router;
-
-
-createApp(App).use(router).mount('#app');
+const app = createApp(App);
+app.use(router);
+app.use(store);
+app.mount('#app');

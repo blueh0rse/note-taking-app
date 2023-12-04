@@ -1,5 +1,5 @@
 <template>
-    <DashboardNavbar @create-note="showCreateNoteForm" @show-notes="showNotesList" />
+    <DashboardNavbar @create-note="showCreateNoteForm" @show-notes="showNotesList" @logout="logout" />
     <div v-if="isCreateNoteVisible" class="create-note-form">
         <h2>Create New Note</h2>
         <form @submit.prevent="createNote">
@@ -168,6 +168,14 @@ export default {
         cancelEdit() {
             this.editingNote = null;
             this.createNoteMessage = '';
+        },
+        logout() {
+            // Clear user session, local storage, or Vuex state as necessary
+            // For example, if using Vuex:
+            // this.$store.dispatch('logout');
+
+            // Redirect to the login page
+            this.$router.push('/home');
         },
     }
 }
