@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const ObjectId = require("mongodb").ObjectId;
 
 const noteSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  owner: [{ type: String, id: String }],
+  name: { type: String, required: true, unique: true },
+  ownerId: { type: ObjectId },
   content: [{ type: String }],
 });
 

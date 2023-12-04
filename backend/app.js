@@ -13,6 +13,7 @@ const express = require("express");
 const app = express();
 const fs = require('fs');
 
+const cacert = fs.readFileSync('./certificates/cacert.pem');
 const server_key = fs.readFileSync('./certificates/webserver.key.pem');
 const server_cert = fs.readFileSync('./certificates/webserver.crt.pem');
 
@@ -24,19 +25,19 @@ app.get("/", (req, res) => {
   res.status(201).send("OK");
 });
 
-// // middlewares
-// const authMiddleware = require("./middlewares/auth.middle.js");
-// app.use(authMiddleware);
-
 // routes
+const authRoutes = require("./routes/auth.routes.js")
 const usersRoutes = require("./routes/users.routes.js");
 const notesRoutes = require("./routes/notes.routes.js");
 const groupsRoutes = require("./routes/groups.routes.js");
+
+app.use("/", authRoutes);
 app.use("/users", usersRoutes);
 app.use("/notes", notesRoutes);
 app.use("/groups", groupsRoutes);
 
 const httpsOptions = {
+  ca: cacert,
   key: server_key,
   cert: server_cert,
   passphrase: process.env.SERVER_PASS
