@@ -25,10 +25,6 @@ app.get("/", (req, res) => {
   res.status(201).send("OK");
 });
 
-// // middlewares
-// const authMiddleware = require("./middlewares/auth.js");
-// app.use(authMiddleware);
-
 // routes
 const authRoutes = require("./routes/auth.routes.js")
 const usersRoutes = require("./routes/users.routes.js");
