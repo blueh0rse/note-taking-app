@@ -13,7 +13,6 @@
   </div>
   <div v-if="isSignupVisible" class="auth-forms">
     <form @submit.prevent="signup">
-      <input type="text" v-model="signupUsername" placeholder="Username" required />
       <input type="email" v-model="signupEmail" placeholder="Email" required
         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
       <input type="password" v-model="signupPassword" placeholder="Password" required
@@ -62,11 +61,11 @@ export default {
         return;
       }
       try {
-        const response = await authService.signup(this.signupUsername, this.signupPassword);
-        this.signupError = ''; // Clear any previous error
-        // Redirect or auto-login
-        this.$store.commit('setUser', response.data.user); // Update Vuex store
-        this.$router.push('/dashboard'); // Redirect to dashboard
+        const response = await authService.signup(this.signupEmail, this.signupPassword);
+        console.log(response)
+        
+        // in response.data.message you have the message
+
       } catch (error) {
         this.signupError = 'Failed to sign up. ' + error.message;
       }
