@@ -1,36 +1,35 @@
 <template>
     <div>
-      <DashboardNavbar @create-note="showCreateNoteForm" @show-notes="showNotesList" @logout="logout" />
-      <div v-if="isCreateNoteVisible" class="create-note-form">
-        <h2>Create New Note</h2>
-        <form @submit.prevent="createNote">
-            <input type="text" v-model="newNoteTitle" placeholder="Note name" required />
-            <button type="submit">Create Note</button>
-            <button type="button" @click="cancelCreateNote">Cancel</button>
-        </form>
-      </div>
-  
-      <div v-else-if="editingNote" class="edit-note-form">
-        <h2>Edit Note</h2>
-        <form @submit.prevent="updateNote">
-          <input type="text" v-model="editingNote.title" required />
-          <textarea v-model="editingNote.content" required></textarea>
-          <button type="button" @click="cancelEdit">Cancel</button>
-          <button type="submit">Update Note</button>
-          <button @click="deleteNote">Delete Note</button>
-        </form>
-      </div>
-  
-      <div v-else class="notes-list">
-        <div v-for="note in notes" :key="note.id" class="note-item">
-          <h3 @click="selectNoteForEdit(note)">{{ note.title }}</h3>
-          <!-- Additional note details can be shown here -->
+        <DashboardNavbar @create-note="showCreateNoteForm" @show-notes="showNotesList" @logout="logout" />
+        <div v-if="isCreateNoteVisible" class="create-note-form">
+            <h2>Create New Note</h2>
+            <form @submit.prevent="createNote">
+                <input type="text" v-model="newNoteTitle" placeholder="Note name" required />
+                <button type="submit" class="custom-button">Create Note</button>
+                <button type="button" @click="cancelCreateNote" class="custom-button cancel-button">Cancel</button>
+            </form>
         </div>
-      </div>
-  
-      <p class="message">{{ createNoteMessage }}</p>
+        <div v-else-if="editingNote" class="edit-note-form">
+            <h2>Edit Note</h2>
+            <form @submit.prevent="updateNote">
+                <input type="text" v-model="editingNote.title" required />
+                <textarea v-model="editingNote.content" required></textarea>
+                <button type="button" @click="cancelEdit" class="custom-button cancel-button">Cancel</button>
+                <button type="submit" class="custom-button update-button">Update Note</button>
+                <button @click="deleteNote" class="custom-button delete-button">Delete Note</button>
+            </form>
+        </div>
+
+        <div v-else class="notes-list">
+            <div v-for="note in notes" :key="note.id" class="note-item">
+                <h3 @click="selectNoteForEdit(note)">{{ note.title }}</h3>
+                <!-- Additional note details can be shown here -->
+            </div>
+        </div>
+
+        <p class="message">{{ createNoteMessage }}</p>
     </div>
-  </template>
+</template>
   
   
 <script>

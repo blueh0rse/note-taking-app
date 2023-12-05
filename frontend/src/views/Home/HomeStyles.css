@@ -80,6 +80,7 @@ body {
   color: white;
   cursor: pointer;
   box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
 /* Button Hover Effect */
