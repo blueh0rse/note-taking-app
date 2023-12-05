@@ -48,6 +48,28 @@
   box-sizing: border-box;
 }
 
+.edit-note-form {
+  width: 80%;
+  padding: 100px;
+  background-color: cornflowerblue; 
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: white; 
+  text-align: center; 
+  margin: 0 auto; 
+  font-style: italic;
+}
+
+.edit-note-form input,
+.edit-note-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
 /* Navbar Styles */
 .navbar {
   background-color: cornflowerblue;
