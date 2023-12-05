@@ -29,13 +29,14 @@
 .create-note-form {
   width: 80%;
   padding: 20px;
-  background-color: cornflowerblue; /* Cambia il colore in blu */
+  background-color: cornflowerblue; 
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  color: white; /* Cambia il colore del testo a bianco */
-  text-align: center; /* Centra il testo orizzontalmente */
-  margin: 0 auto; /* Centra la box orizzontalmente */
+  color: white; 
+  text-align: center; 
+  margin: 0 auto; 
+  font-style: italic;
 }
 
 .create-note-form input,
