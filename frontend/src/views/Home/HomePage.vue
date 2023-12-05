@@ -1,30 +1,57 @@
 <template>
-  <!-- <LoginForm v-if="!isAuthenticated"></LoginForm>
-  <Dashboard v-if="isAuthenticated"></Dashboard> -->
-  <!-- Navbar is hidden when not logged in -->
+  <!-- Conditional rendering of Login and Sign Up forms -->
   <div class="auth-forms">
-    <h2 v-if="!isSignupVisible">Login</h2>
-    <h2 v-if="isSignupVisible">Sign Up</h2>
+    <h2 v-if="!isSignupVisible">Login</h2> <!-- Display "Login" heading when not in Sign Up mode -->
+    <h2 v-if="isSignupVisible">Sign Up</h2> <!-- Display "Sign Up" heading when in Sign Up mode -->
+
+    <!-- Login Form -->
     <form @submit.prevent="login" v-if="!isSignupVisible">
       <input type="text" v-model="email" placeholder="Email" required />
-      <input type="password" v-model="password" placeholder="Password" required />
-      <p v-if="loginError" class="error">{{ loginError }}</p>
-      <button type="submit">Login</button>
+      <!-- Password input field -->
+      <div class="password-input">
+        <input
+          :type="showPassword ? 'text' : 'password'"
+          v-model="password"
+          placeholder="Password"
+          required
+        />
+        <!-- Button to toggle password visibility -->
+        <button @click="showPassword = !showPassword">
+          {{ showPassword ? 'Hide Password' : 'Show Password' }} <!-- Toggle button text -->
+        </button>
+      </div>
+      <p v-if="loginError" class="error">{{ loginError }}</p> <!-- Display login error message if there's one -->
+      <button type="submit">Login</button> <!-- Login button -->
     </form>
+
+    <!-- "Sign Up" Button (Switch to Sign Up mode) -->
     <button @click="showSignupForm(); resetLoginForm()" v-if="!isSignupVisible">Sign Up</button>
   </div>
+
+  <!-- Sign Up Form -->
   <div v-if="isSignupVisible" class="auth-forms">
     <form @submit.prevent="signup">
       <input type="email" v-model="signupEmail" placeholder="Email" required
         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
-      <input type="password" v-model="signupPassword" placeholder="Password" required
-        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{10,}$" />
+      <!-- Password input field -->
+      <div class="password-input">
+        <input
+          :type="showSignupPassword ? 'text' : 'password'"
+          v-model="signupPassword"
+          placeholder="Password"
+          required
+        />
+        <!-- Button to toggle password visibility -->
+        <button @click="showSignupPassword = !showSignupPassword">
+          {{ showSignupPassword ? 'Hide' : 'Show' }} <!-- Toggle button text -->
+        </button>
+      </div>
       <input type="password" v-model="signupPasswordConfirm" placeholder="Confirm Password" required />
       <p class="password-instruction">Please choose a password that contains 10 characters, including a number and a
         special character.</p>
-      <p v-if="signupError" class="error">{{ signupError }}</p>
-      <button type="submit">Sign Up</button>
-      <button @click="resetSignupForm">Cancel</button>
+      <p v-if="signupError" class="error">{{ signupError }}</p> <!-- Display signup error message if there's one -->
+      <button type="submit">Sign Up</button> <!-- Sign Up button -->
+      <button @click="resetSignupForm">Cancel</button> <!-- Cancel button for Sign Up -->
     </form>
   </div>
 </template>
@@ -35,6 +62,8 @@ import authService from '@/services/authService';
 export default {
   data() {
     return {
+      showPassword: false, // Initial state for showing/hiding password in login form
+      showSignupPassword: false, // Initial state for showing/hiding password in sign-up form
       email: '',
       password: '',
       isSignupVisible: false,
