@@ -3,12 +3,8 @@
       <h2>Create New Note</h2>
       <form @submit.prevent="createNote">
         <div>
-          <label for="title">Title:</label>
-          <input type="text" id="title" v-model="title" required>
-        </div>
-        <div>
-          <label for="content">Content:</label>
-          <textarea id="content" v-model="content" required></textarea>
+          <label for="name">name:</label>
+          <input type="text" id="name" v-model="name" required>
         </div>
         <button type="submit">Create Note</button>
       </form>
@@ -17,30 +13,28 @@
   
 <script>
 import axios from 'axios';
+axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
 
 export default {
   data() {
     return {
-      title: '',
-      content: ''
+      name: ''
     };
   },
   methods: {
     createNote() {
-      if (!this.title || !this.content) {
+      if (!this.name) {
         alert('Please fill in all fields.');
         return;
       }
 
-      axios.post('http://localhost:3000/notes', {
-        title: this.title,
-        content: this.content
+      axios.post('https://localhost:3000/notes', {
+        name: this.name
       })
       .then(() => {
         alert('Note successfully created.');
         // Clear form or redirect user
-        this.title = '';
-        this.content = '';
+        this.name = '';
         // this.$router.push('/path-to-view-note');
       })
       .catch(error => {

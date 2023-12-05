@@ -15,17 +15,14 @@ use("zotion");
 // Insert a few documents into the users collection.
 db.getCollection("users").insertMany([
   {
-    username: "user1",
     password: "$2b$10$DJomDXMLGSoV1ZYmt4k1TO2lPjVHMrHeSWHBIrKff7TB8yFfLmQnm",
     email: "user1@email.com",
   },
   {
-    username: "user2",
     password: "$2b$10$DJomDXMLGSoV1ZYmt4k1TO2lPjVHMrHeSWHBIrKff7TB8yFfLmQnm",
     email: "user2@email.com",
   },
   {
-    username: "user3",
     password: "$2b$10$DJomDXMLGSoV1ZYmt4k1TO2lPjVHMrHeSWHBIrKff7TB8yFfLmQnm",
     email: "user3@email.com",
   },

@@ -16,10 +16,10 @@ When everything is correctly installed, these commands should be sufficient:
 
 ````bash
 $ cd note-taking-app/backend
-# run server
-$ node app.js
 # run database
 $ sudo mongod --dbpath ~/data/db --config ./database/mongo.conf
+# run server
+$ node app.js
 ````
 
 ## 3. How to install prerequisites?
