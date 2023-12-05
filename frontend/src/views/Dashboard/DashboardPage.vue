@@ -3,8 +3,7 @@
     <div v-if="isCreateNoteVisible" class="create-note-form">
         <h2>Create New Note</h2>
         <form @submit.prevent="createNote">
-            <input type="text" v-model="newNoteTitle" placeholder="Note Title" required />
-            <textarea v-model="newNoteContent" placeholder="Note Content" required></textarea>
+            <input type="text" v-model="newNoteTitle" placeholder="Note name" required />
             <button type="submit">Create Note</button>
             <button type="button" @click="cancelCreateNote">Cancel</button>
         </form>
@@ -32,6 +31,9 @@
 import DashboardNavbar from '@/components/DashboardNavbar.vue';
 // import apiService from '@/services/apiService.js';
 import axios from 'axios';
+import store from "../../store/index";
+
+
 
 export default {
     name: 'DashboardPage',
@@ -47,7 +49,6 @@ export default {
                 // Add as many mock notes as needed for testing
             ],
             newNoteTitle: '',
-            newNoteContent: '',
             createNoteMessage: '',
             selectedNote: null,
             isCreateNoteVisible: false,
@@ -70,7 +71,6 @@ export default {
         showNotesList() {
             this.isCreateNoteVisible = false;
             this.newNoteTitle = '';
-            this.newNoteContent = '';
             this.createNoteMessage = '';
             this.selectedNote = null;
             this.editingNote = null;
@@ -91,31 +91,23 @@ export default {
         },
         async createNote() {
             this.createNoteMessage = '';
-            if (!this.newNoteTitle || !this.newNoteContent) {
+            if (!this.newNoteTitle) {
                 this.createNoteMessage = 'Please fill in all fields.';
                 return;
             }
-
             try {
-                const newNote = {
-                    id: Date.now(), // Mock ID using the current timestamp
-                    title: this.newNoteTitle,
-                    content: this.newNoteContent
-                };
-                this.notes.push(newNote);
-                this.newNoteTitle = '';
-                this.newNoteContent = '';
-                this.createNoteMessage = 'Note created successfully.';
-                /*const noteData = {
-                    title: this.newNoteTitle,
-                    content: this.newNoteContent
-                };
-                const response = await axios.post('/api/notes', noteData);
-                this.notes.push(response.data); // Add new note to notes array
-                this.newNoteTitle = '';
-                this.newNoteContent = '';
+                // join user token everytime I send request
+                console.log("store")
+                console.log(store.state)
+                axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
+                this.createNoteMessage = 'Creating note...';
+                const noteData = { name: this.newNoteTitle };
+                const response = await axios.post('https://localhost:3000/notes', noteData);
+                console.log(response)
+                // this.notes.push(response.data); // Add new note to notes array
+                this.newNoteTitle = ''
                 this.isCreateNoteVisible = false;
-                this.createNoteMessage = 'Note created successfully.';*/
+                this.createNoteMessage = 'Note created successfully.';
             } catch (error) {
                 this.createNoteMessage = `Failed to create note: ${error.message}`;
             }
@@ -161,7 +153,6 @@ export default {
         cancelCreateNote() {
             this.isCreateNoteVisible = false;
             this.newNoteTitle = '';
-            this.newNoteContent = '';
             this.createNoteMessage = '';
             this.editingNote = null;
         },

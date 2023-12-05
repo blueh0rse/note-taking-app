@@ -1,12 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
+// secret management
+// require("dotenv").config();
 
-const API_URL = 'https://localhost:3000'; // Replace with your API URL
+// const API = `${process.env.API_URL}:${process.env.API_PORT}`;
+const API = "https://localhost:3000"; // BACKEND
 
 export default {
-  login(username, password) {
-    return axios.post(`${API_URL}/login`, { username, password });
+  login(email, password) {
+    return axios.post(`${API}/login`, {
+      email,
+      password,
+    });
   },
-  signup(username, password) {
-    return axios.post(`${API_URL}/signup`, { username, password });
-  }
+  signup(email, password) {
+    return axios.post(`${API}/signup`, { email, password });
+  },
+  test() {
+    return axios.get(`${API}/`);
+  },
 };

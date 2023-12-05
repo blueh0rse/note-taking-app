@@ -40,7 +40,7 @@ exports.loginUser = async (req, res) => {
     // check if password is correct
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).send({ message: "Invalid email or password" });
+      return res.status(401).send({ message: "Invalid email or password2" });
     }
 
     // generate JWT token
