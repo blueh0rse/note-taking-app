@@ -1,110 +1,89 @@
 /*.dashboard {
 }*/
 
-.notes-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-    /* Additional styling */
-}
-
-/* General Styles */
-.navbar {
-    background-color: #333;
-    padding: 10px 0;
-    margin-bottom: 20px; /* Add some space below the navbar */
-  }
-  
-  .navbar ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center; /* Center navbar items */
-  }
-  
-  .navbar li {
-    margin: 0 10px; /* Give some space between the navbar items */
-  }
-  
-  .navbar a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px; /* Add padding for better click area */
-    border-radius: 5px; /* Optional: Rounded corners for links */
-  }
-  
-  .navbar a:hover, .navbar a.router-link-exact-active {
-    background-color: #111;
-    transition: background-color 0.3s; /* Smooth transition for hover effect */
-  }
-  
-  /* Additional global styling */
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
-    margin: 0; /* Reset default margin */
-    padding: 0; /* Reset default padding */
-  }
-
 /* Notes List */
 .notes-list {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 80%;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .note-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    width: 80%;
-    cursor: pointer;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 80%;
+  cursor: pointer;
 }
 
 .note-item:hover {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 /* Create Note Form */
 .create-note-form {
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
-    margin: 20px auto;
-    width: 80%;
+  width: 80%;
+  padding: 20px;
+  background-color: cornflowerblue; 
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: white; 
+  text-align: center; 
+  margin: 0 auto; 
+  font-style: italic;
 }
 
 .create-note-form input,
 .create-note-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
 }
 
-.create-note-form button {
-    background-color: #5cb85c;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-    margin-right: 10px;
+/* Navbar Styles */
+.navbar {
+  background-color: cornflowerblue;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centra gli elementi verticalmente */
 }
 
-.create-note-form button:hover {
-    background-color: #4cae4c;
+.navbar a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.navbar button {
+  background-color: darkslategray; 
+  color: white;
+  padding: 15px 30px; 
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 10px; /* Aggiungi spazio tra i pulsanti */
+}
+
+.navbar button:hover {
+  background-color: #0056b3; 
 }
 
 /* Message Styling */
 .message {
-    color: #d9534f;
-    margin: 10px 0;
+  color: #d9534f;
+  margin: 10px 0;
 }
 
 /* Edit Note Form */
-/* You can add similar styles as Create Note Form */
+

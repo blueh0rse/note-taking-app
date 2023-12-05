@@ -1,31 +1,37 @@
 <template>
-    <DashboardNavbar @create-note="showCreateNoteForm" @show-notes="showNotesList" @logout="logout" />
-    <div v-if="isCreateNoteVisible" class="create-note-form">
+    <div>
+      <DashboardNavbar @create-note="showCreateNoteForm" @show-notes="showNotesList" @logout="logout" />
+      <div v-if="isCreateNoteVisible" class="create-note-form">
         <h2>Create New Note</h2>
         <form @submit.prevent="createNote">
             <input type="text" v-model="newNoteTitle" placeholder="Note name" required />
             <button type="submit">Create Note</button>
             <button type="button" @click="cancelCreateNote">Cancel</button>
         </form>
-    </div>
-    <div v-else-if="editingNote" class="edit-note-form">
+      </div>
+  
+      <div v-else-if="editingNote" class="edit-note-form">
         <h2>Edit Note</h2>
         <form @submit.prevent="updateNote">
-            <input type="text" v-model="editingNote.title" required />
-            <textarea v-model="editingNote.content" required></textarea>
-            <button type="button" @click="cancelEdit">Cancel</button>
-            <button type="submit">Update Note</button>
-            <button @click="deleteNote">Delete Note</button>
+          <input type="text" v-model="editingNote.title" required />
+          <textarea v-model="editingNote.content" required></textarea>
+          <button type="button" @click="cancelEdit">Cancel</button>
+          <button type="submit">Update Note</button>
+          <button @click="deleteNote">Delete Note</button>
         </form>
-    </div>
-    <div v-else class="notes-list">
+      </div>
+  
+      <div v-else class="notes-list">
         <div v-for="note in notes" :key="note.id" class="note-item">
-            <h3 @click="selectNoteForEdit(note)">{{ note.title }}</h3>
-            <!-- Additional note details can be shown here -->
+          <h3 @click="selectNoteForEdit(note)">{{ note.title }}</h3>
+          <!-- Additional note details can be shown here -->
         </div>
+      </div>
+  
+      <p class="message">{{ createNoteMessage }}</p>
     </div>
-    <p class="message">{{ createNoteMessage }}</p>
-</template>
+  </template>
+  
   
 <script>
 import DashboardNavbar from '@/components/DashboardNavbar.vue';
