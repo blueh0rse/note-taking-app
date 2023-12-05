@@ -29,7 +29,7 @@
 .create-note-form {
   width: 80%;
   padding: 20px;
-  background-color: #007bff; /* Cambia il colore in blu */
+  background-color: cornflowerblue; /* Cambia il colore in blu */
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -49,7 +49,7 @@
 
 /* Navbar Styles */
 .navbar {
-  background-color: #333;
+  background-color: cornflowerblue;
   padding: 10px 0;
   margin-bottom: 20px;
   display: flex;
@@ -65,17 +65,17 @@
 }
 
 .navbar button {
-  background-color: #007bff; /* Cambia il colore in blu */
+  background-color: darkslategray; 
   color: white;
-  padding: 15px 30px; /* Rendi leggermente più grandi i pulsanti */
+  padding: 15px 30px; 
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  margin: 0 10px; /* Aggiungi spazio tra i pulsanti */
+  margin: 10px; /* Aggiungi spazio tra i pulsanti */
 }
 
 .navbar button:hover {
-  background-color: #0056b3; /* Cambia il colore al passaggio del mouse */
+  background-color: #0056b3; 
 }
 
 /* Message Styling */
@@ -85,4 +85,4 @@
 }
 
 /* Edit Note Form */
-/* Aggiungi stili simili a Create Note Form se necessario */
+

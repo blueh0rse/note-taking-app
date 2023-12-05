@@ -1,7 +1,6 @@
 <template>
     <div>
       <DashboardNavbar @create-note="showCreateNoteForm" @show-notes="showNotesList" @logout="logout" />
-  
       <div v-if="isCreateNoteVisible" class="create-note-form">
         <h2>Create New Note</h2>
         <form @submit.prevent="createNote">

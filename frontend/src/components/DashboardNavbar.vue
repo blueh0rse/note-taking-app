@@ -36,11 +36,11 @@ export default {
   border-radius: 5px;
   font-size: 16px;
   transition: background-color 0.3s;
-  margin-right: 20px; 
+  margin-right: 30px; 
 }
 
 .custom-button:last-child {
-  margin-right: 0; /* Rimuove il margine a destra dell'ultimo bottone */
+  margin-right: 1; 
 }
 
 .custom-button:hover {
@@ -52,7 +52,7 @@ export default {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: #333;
+  background-color: cornflowerblue;
   display: flex;
 }
 
