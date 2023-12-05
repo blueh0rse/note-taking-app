@@ -28,7 +28,7 @@
 /* Create Note Form */
 .create-note-form {
   width: 80%;
-  padding: 20px;
+  padding: 100px;
   background-color: cornflowerblue; 
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -55,7 +55,8 @@
   margin-bottom: 20px;
   display: flex;
   justify-content: center;
-  align-items: center; /* Centra gli elementi verticalmente */
+  align-items: center; 
+  
 }
 
 .navbar a {
@@ -72,7 +73,7 @@
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  margin: 10px; /* Aggiungi spazio tra i pulsanti */
+  margin: 20px; /*add space bw words*/
 }
 
 .navbar button:hover {
@@ -84,6 +85,33 @@
   color: #d9534f;
   margin: 10px 0;
 }
+
+.custom-button {
+    background-color: #007bff; 
+    color: white;
+    padding: 10px 20px; /* Padding */
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s, box-shadow 0.3s; /* change color when mouse pass over it */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* shadow */
+}
+
+.custom-button:hover {
+    background-color: #0056b3; /* change color when mouse pass over it */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* add shadow */
+}
+
+.cancel-button {
+    background-color: #007bff; 
+}
+
+.cancel-button:hover {
+    background-color: #dc3545; /* add red color to cancel button when mouse pass over it*/
+}
+
+
 
 /* Edit Note Form */
 
