@@ -1,10 +1,12 @@
 <template>
+  <!-- <LoginForm v-if="!isAuthenticated"></LoginForm>
+  <Dashboard v-if="isAuthenticated"></Dashboard> -->
   <!-- Navbar is hidden when not logged in -->
   <div class="auth-forms">
     <h2 v-if="!isSignupVisible">Login</h2>
     <h2 v-if="isSignupVisible">Sign Up</h2>
     <form @submit.prevent="login" v-if="!isSignupVisible">
-      <input type="text" v-model="user_email" placeholder="Email" required />
+      <input type="text" v-model="email" placeholder="Email" required />
       <input type="password" v-model="password" placeholder="Password" required />
       <p v-if="loginError" class="error">{{ loginError }}</p>
       <button type="submit">Login</button>
@@ -33,7 +35,7 @@ import authService from '@/services/authService';
 export default {
   data() {
     return {
-      user_email: '',
+      email: '',
       password: '',
       isSignupVisible: false,
       signupUsername: '',
@@ -47,10 +49,20 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await authService.login(this.user_email, this.password);
-        this.loginError = ''; // Clear any previous error
-        this.$store.commit('setUser', response.data.user); // Update Vuex store
-        this.$router.push('/dashboard'); // Redirect to dashboard
+        this.$store.dispatch('login', {
+          email: this.email, // The email input from the form
+          password: this.password // The password input from the form
+        }).then(() => {
+          // Redirect after a successful login
+          this.$router.push({ path: '/dashboard' }); // Redirect to the dashboard or a route of your choice
+        }).catch((error) => {
+          // Handle the login error, e.g., show an error message
+          console.error("Login failed:", error);
+        });
+        // const response = await authService.login(this.email, this.password);
+        // this.loginError = ''; // Clear any previous error
+        // this.$store.commit('setUser', response.data.user); // Update Vuex store
+        // this.$router.push('/dashboard'); // Redirect to dashboard
       } catch (error) {
         this.loginError = 'Failed to login. ' + error.message;
       }
@@ -63,7 +75,7 @@ export default {
       try {
         const response = await authService.signup(this.signupEmail, this.signupPassword);
         console.log(response)
-        
+
         // in response.data.message you have the message
 
       } catch (error) {
@@ -82,7 +94,7 @@ export default {
       this.isSignupVisible = false;
     },
     resetLoginForm() {
-      this.user_email = '';
+      this.email = '';
       this.loginPassword = '';
       this.loginError = '';
     },

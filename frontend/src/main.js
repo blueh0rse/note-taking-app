@@ -10,7 +10,7 @@ app.mount('#app');*/
 import { createApp } from "vue";
 import App from "./App.vue";
 import { createRouter, createWebHistory } from "vue-router";
-import store from "./store";
+import store from "./store/index";
 import HomePage from "./views/Home/HomePage.vue";
 import DashboardPage from "./views/Dashboard/DashboardPage.vue"; // import other pages as needed
 
@@ -25,12 +25,16 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = store.getters.isAuthenticated;
-  if (to.path !== "/" && !isAuthenticated) {
-    next("/");
-  } else {
-    next();
-  }
+  const isAuthenticated = store.state.isAuthenticated;
+  console.log(isAuthenticated);
+
+  // if (!isAuthenticated) {
+  //   console.log("Redirecting to login");
+  //   next("/"); // Redirect to login if not authenticated and trying to access a different route
+  // } else {
+  //   // next(); // Proceed with the navigation
+  // }
+  next(); // Proceed with the navigation
 });
 
 const app = createApp(App);
