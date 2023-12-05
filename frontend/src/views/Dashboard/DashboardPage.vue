@@ -9,15 +9,14 @@
                 <button type="button" @click="cancelCreateNote" class="custom-button cancel-button">Cancel</button>
             </form>
         </div>
-
         <div v-else-if="editingNote" class="edit-note-form">
             <h2>Edit Note</h2>
             <form @submit.prevent="updateNote">
                 <input type="text" v-model="editingNote.title" required />
                 <textarea v-model="editingNote.content" required></textarea>
-                <button type="button" @click="cancelEdit">Cancel</button>
-                <button type="submit">Update Note</button>
-                <button @click="deleteNote">Delete Note</button>
+                <button type="button" @click="cancelEdit" class="custom-button cancel-button">Cancel</button>
+                <button type="submit" class="custom-button update-button">Update Note</button>
+                <button @click="deleteNote" class="custom-button delete-button">Delete Note</button>
             </form>
         </div>
 

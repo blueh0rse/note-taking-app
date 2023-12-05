@@ -109,11 +109,22 @@
 }
 
 .cancel-button:hover {
-    background-color: #dc3545; /* add red color to cancel button when mouse pass over it*/
+    background-color: #f0ad4e; /* add red color to cancel button when mouse pass over it*/
 }
 
+.update-button {
+  background-color: #007bff; 
+}
+.update-button:hover {
+  background-color: #5cb85c; /* add red color to cancel button when mouse pass over it*/
+}
 
-
+.delete-button {
+  background-color: #007bff; 
+}
+.delete-button:hover {
+  background-color: #dc3545; 
+}
 
 /* Edit Note Form */
 
