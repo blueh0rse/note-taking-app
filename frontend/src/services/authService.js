@@ -15,6 +15,15 @@ export default {
   signup(email, password) {
     return axios.post(`${API}/signup`, { email, password });
   },
+  fetch_notes() {
+    return axios.get(`${API}/notes`);
+  },
+  edit_note(noteData) {
+    return axios.put(`${API}/notes/:note_id`, {noteData});
+  },
+  delete_note(noteData) {
+    return axios.delete(`${API}/notes/:note_id`, {noteData})
+  },
   test() {
     return axios.get(`${API}/`);
   },
