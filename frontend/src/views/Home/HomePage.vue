@@ -9,14 +9,9 @@
       <input type="text" v-model="email" placeholder="Email" required />
       <!-- Password input field -->
       <div class="password-input">
-        <input
-          :type="showPassword ? 'text' : 'password'"
-          v-model="password"
-          placeholder="Password"
-          required
-        />
+        <input :type="showPassword ? 'text' : 'password'" v-model="password" placeholder="Password" required />
         <!-- Button to toggle password visibility -->
-        <button @click="showPassword = !showPassword">
+        <button type="button" @click.prevent="showPassword = !showPassword">
           {{ showPassword ? 'Hide Password' : 'Show Password' }} <!-- Toggle button text -->
         </button>
       </div>
@@ -35,18 +30,14 @@
         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" />
       <!-- Password input field -->
       <div class="password-input">
-        <input
-          :type="showSignupPassword ? 'text' : 'password'"
-          v-model="signupPassword"
-          placeholder="Password"
-          required
-        />
+        <input :type="showSignupPassword ? 'text' : 'password'" v-model="signupPassword" placeholder="Password"
+          required />
+        <input :type="showSignupPassword ? 'text' : 'password'" v-model="signupPasswordConfirm" placeholder="Confirm Password" required />
         <!-- Button to toggle password visibility -->
-        <button @click="showSignupPassword = !showSignupPassword">
-          {{ showSignupPassword ? 'Hide' : 'Show' }} <!-- Toggle button text -->
+        <button type="button" @click.prevent="showSignupPassword = !showSignupPassword" class="toggle-password-btn">
+          {{ showSignupPassword ? 'Hide' : 'Show' }} Passwords
         </button>
       </div>
-      <input type="password" v-model="signupPasswordConfirm" placeholder="Confirm Password" required />
       <p class="password-instruction">Please choose a password that contains 10 characters, including a number and a
         special character.</p>
       <p v-if="signupError" class="error">{{ signupError }}</p> <!-- Display signup error message if there's one -->
@@ -56,14 +47,14 @@
   </div>
 </template>
 
+
+
 <script>
 import authService from '@/services/authService';
 
 export default {
   data() {
     return {
-      showPassword: false, // Initial state for showing/hiding password in login form
-      showSignupPassword: false, // Initial state for showing/hiding password in sign-up form
       email: '',
       password: '',
       isSignupVisible: false,
@@ -72,6 +63,8 @@ export default {
       signupPassword: '',
       signupPasswordConfirm: '',
       loginError: '',
+      showPassword: false, // Initial state for showing/hiding password in login form
+      showSignupPassword: false, // Initial state for showing/hiding password in sign-up form
       signupError: '',
     };
   },
