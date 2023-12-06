@@ -18,6 +18,7 @@ export default {
   fetch_notes() {
     return axios.get(`${API}/notes`);
   },
+  // To change note_id for edit and delete
   edit_note(noteData) {
     return axios.put(`${API}/notes/:note_id`, {noteData});
   },

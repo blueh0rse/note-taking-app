@@ -50,8 +50,7 @@ export default {
         return {
             //notes: [],
             notes: [
-                { id: 1, title: 'Note 1', content: 'Content for note 1' },
-                { id: 2, title: 'Note 2', content: 'Content for note 2' },
+                { id: 1, title: 'Note Example', content: 'Content for note 1' },
                 // Add as many mock notes as needed for testing
             ],
             newNoteTitle: '',
@@ -189,21 +188,14 @@ export default {
             this.createNoteMessage = '';
         },
         logout() {
-            // Call the backend logout endpoint to invalidate the token
-            axios
-                .post('https://localhost:3000/logout')
-                .then(() => {
-                    // Reset the authentication state in the Vuex store
-                    this.$store.commit('setAuthentication', false);
-                    this.$store.commit('setToken', null);
-                    this.$store.commit('setUserEmail', null);
+            // Reset the authentication state in the Vuex store
+            this.$store.commit('setAuthentication', false);
+            this.$store.commit('setToken', null);
+            this.$store.commit('setUserEmail', null);
 
-                    // Redirect to the login page
-                    this.$router.push('/');
-                })
-                .catch((error) => {
-                    console.error('Logout failed:', error);
-                });
+            // Redirect to the login page
+            this.$router.push('/');
+
         },
     }
 }
