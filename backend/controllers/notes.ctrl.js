@@ -24,22 +24,17 @@ exports.createNote = async (req, res) => {
 
 exports.getUserNotes = async (req, res) => {
   try {
-    const notes = await Note.find({ owner: req.params.userId });
-    res.status(200).json(notes);
+    res.status(200).json(req.items);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Something wrong happened!" });
   }
 };
 
 exports.getNoteById = async (req, res) => {
   try {
-    // const note = await Note.findById(req.params.id);
-    // if (!note) res.status(404).json({ message: "Note not found." });
-    const { name, content } = req.item;
-    const note = { name, content };
-    res.status(200).json(note);
+    res.status(200).json(req.item);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: "Something wrong happened!" });
   }
 };
 
