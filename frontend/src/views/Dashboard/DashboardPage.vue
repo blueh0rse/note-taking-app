@@ -11,11 +11,11 @@
         </div>
         <div v-else-if="editingNote" class="edit-note-form">
             <h2>Edit Note</h2>
-            <form @submit.prevent="updateNote">
+            <form>
                 <input type="text" v-model="editingNote.title" required />
                 <textarea v-model="editingNote.content" required></textarea>
                 <button type="button" @click="cancelEdit" class="custom-button cancel-button">Cancel</button>
-                <button type="submit" class="custom-button update-button">Update Note</button>
+                <button @click="updateNote" type="submit" class="custom-button update-button">Update Note</button>
                 <button @click="deleteNote" class="custom-button delete-button">Delete Note</button>
             </form>
         </div>
@@ -37,6 +37,7 @@ import DashboardNavbar from '@/components/DashboardNavbar.vue';
 // import apiService from '@/services/apiService.js';
 import axios from 'axios';
 import store from "../../store/index";
+import authService from '@/services/authService';
 
 
 
@@ -49,8 +50,7 @@ export default {
         return {
             //notes: [],
             notes: [
-                { id: 1, title: 'Note 1', content: 'Content for note 1' },
-                { id: 2, title: 'Note 2', content: 'Content for note 2' },
+                { id: 1, title: 'Note Example', content: 'Content for note 1' },
                 // Add as many mock notes as needed for testing
             ],
             newNoteTitle: '',
@@ -66,9 +66,20 @@ export default {
     methods: {
         async fetchNotes() {
             try {
-                const response = await axios.get('/api/notes');
-                this.notes = response.data;
-                this.createNoteMessage = '';
+                axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
+                this.createNoteMessage = 'Fetching notes...';
+
+                const response = await authService.fetch_notes();
+
+                // Check if the response status code indicates success (e.g., 200)
+                if (response.status === 200) {
+                    // Update your notes data here
+                    this.notes = response.data;
+                    this.createNoteMessage = 'Notes fetched successfully.';
+                } else {
+                    // Handle unexpected response status codes (e.g., 404, 500)
+                    this.createNoteMessage = `Failed to fetch notes. Server returned status code ${response.status}.`;
+                }
             } catch (error) {
                 this.createNoteMessage = `Failed to fetch notes: ${error.message}`;
             }
@@ -118,24 +129,28 @@ export default {
             }
         },
         async updateNote() {
-            const index = this.notes.findIndex(note => note.id === this.editingNote.id);
+            try {
+                // join user token everytime I send request
+                console.log("store")
+                console.log(store.state)
+                axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
+                this.createNoteMessage = 'Editing note...';
+                const noteData = { name: this.editingNote.title, content: this.editingNote.content };
+                const response = await authService.edit_note(noteData);
+                console.log(response)
+                // this.notes.push(response.data); // Add new note to notes array
+                this.isCreateNoteVisible = false;
+                this.createNoteMessage = 'Note updated successfully.';
+            } catch (error) {
+                this.createNoteMessage = `Failed to update note: ${error.message}`;
+            }
+            /*const index = this.notes.findIndex(note => note.id === this.editingNote.id);
             if (index !== -1) {
                 this.notes[index] = { ...this.editingNote };
                 this.editingNote = null;
                 this.createNoteMessage = 'Note updated successfully.';
             } else {
                 this.createNoteMessage = 'Error: Note not found.';
-            }
-            /*try {
-                const response = await axios.put(`/api/notes/${this.editingNote.id}`, this.editingNote);
-                const updatedNoteIndex = this.notes.findIndex(note => note.id === this.editingNote.id);
-                if (updatedNoteIndex !== -1) {
-                    this.notes[updatedNoteIndex] = response.data;
-                }
-                this.editingNote = null;
-                this.createNoteMessage = 'Note updated successfully.';
-            } catch (error) {
-                this.createNoteMessage = `Failed to update note: ${error.message}`;
             }*/
             this.editingNote = null;
         },
@@ -143,17 +158,24 @@ export default {
             if (!confirm('Are you sure you want to delete this note?')) {
                 return; // Stop if user cancels
             }
-            this.notes = this.notes.filter(note => note.id !== this.editingNote.id);
-            this.createNoteMessage = 'Note deleted successfully.';
-            this.editingNote = null;
-            /*try {
-                await axios.delete(`/api/notes/${this.selectedNote.id}`);
-                this.notes = this.notes.filter(note => note.id !== this.selectedNote.id);
+            try {
+                // join user token everytime I send request
+                console.log("store")
+                console.log(store.state)
+                axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
+                this.createNoteMessage = 'Deleting note...';
+                const noteData = { name: this.editingNote.name };
+                const response = await authService.delete_note(noteData);
+                console.log(response)
+                // this.notes.push(response.data); // Add new note to notes array
+                this.isCreateNoteVisible = false;
                 this.createNoteMessage = 'Note deleted successfully.';
-                this.selectedNote = null; // Reset selected note
             } catch (error) {
                 this.createNoteMessage = `Failed to delete note: ${error.message}`;
-            }*/
+            }
+            /*this.notes = this.notes.filter(note => note.id !== this.editingNote.id);
+            this.createNoteMessage = 'Note deleted successfully.';
+            this.editingNote = null;*/
         },
         cancelCreateNote() {
             this.isCreateNoteVisible = false;
@@ -166,12 +188,14 @@ export default {
             this.createNoteMessage = '';
         },
         logout() {
-            // Clear user session, local storage, or Vuex state as necessary
-            // For example, if using Vuex:
-            // this.$store.dispatch('logout');
+            // Reset the authentication state in the Vuex store
+            this.$store.commit('setAuthentication', false);
+            this.$store.commit('setToken', null);
+            this.$store.commit('setUserEmail', null);
 
             // Redirect to the login page
-            this.$router.push('/home');
+            this.$router.push('/');
+
         },
     }
 }
