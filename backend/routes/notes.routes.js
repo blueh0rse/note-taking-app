@@ -13,6 +13,16 @@ router.post(
   noteController.createNote
 );
 
+// get 1 user note
+router.get(
+  "/:note_id",
+  auth.verifyToken,
+  auth.verifyValidity,
+  auth.verifyRole("user"),
+  auth.verifyPermissions(Note, "ownerId"),
+  noteController.getNoteById
+);
+
 // get user note(s)
 router.get(
   "/",
@@ -21,16 +31,6 @@ router.get(
   auth.verifyRole("user"),
   auth.verifyPermissions(Note, "ownerId"),
   noteController.getUserNotes
-);
-
-// get 1 user note
-router.get(
-  "/:note_name",
-  auth.verifyToken,
-  auth.verifyValidity,
-  auth.verifyRole("user"),
-  auth.verifyPermissions(Note, "ownerId"),
-  noteController.getNoteById
 );
 
 // update 1 user note
