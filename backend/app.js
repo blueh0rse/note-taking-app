@@ -22,7 +22,7 @@ const port = process.env.SERVER_PORT;
 
 // CORS
 const corsOptions = {
-  origin: "http://localhost:8080",
+  origin: process.env.FRONTEND_URL,
   optionsSuccessStatus: 200,
 };
 
