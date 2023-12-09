@@ -26,13 +26,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = store.state.isAuthenticated;
-  console.log(isAuthenticated);
+  console.log(`isAuthenticated: ${isAuthenticated}`);
 
   // if (!isAuthenticated) {
   //   console.log("Redirecting to login");
   //   next("/"); // Redirect to login if not authenticated and trying to access a different route
-  // } else {
-  //   // next(); // Proceed with the navigation
   // }
   next(); // Proceed with the navigation
 });
