@@ -72,19 +72,13 @@ export default {
     async login() {
       try {
         this.$store.dispatch('login', {
-          email: this.email, // The email input from the form
-          password: this.password // The password input from the form
+          email: this.email,
+          password: this.password 
         }).then(() => {
-          // Redirect after a successful login
-          this.$router.push({ path: '/dashboard' }); // Redirect to the dashboard or a route of your choice
+          this.$router.push({ path: '/dashboard' });
         }).catch((error) => {
-          // Handle the login error, e.g., show an error message
           console.error("Login failed:", error);
         });
-        // const response = await authService.login(this.email, this.password);
-        // this.loginError = ''; // Clear any previous error
-        // this.$store.commit('setUser', response.data.user); // Update Vuex store
-        // this.$router.push('/dashboard'); // Redirect to dashboard
       } catch (error) {
         this.loginError = 'Failed to login. ' + error.message;
       }

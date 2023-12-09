@@ -8,9 +8,9 @@ import axios from "axios";
 export default new Vuex.Store({
   state: {
     isAuthenticated: false,
-    token: null, // Add a state property for the JWT token
-    userEmail: null, // Add a state property for the user email
-    // other state properties
+    token: null,
+    userEmail: null,
+    API_URL: process.env.VUE_APP_API_URL,
   },
   mutations: {
     setAuthentication(state, status) {
@@ -29,18 +29,21 @@ export default new Vuex.Store({
     login({ commit }, credentials) {
       // Perform login
       axios
-        .post("https://localhost:3000/login", credentials)
+        .post(this.state.API_URL + "/login", credentials)
         .then((response) => {
-          commit("setAuthentication", true); // Set isAuthenticated to true
-          commit("setToken", response.data.token); // Save the JWT token
-          console.log("response.data.token");
-          console.log(response.data.token);
-          console.log("this.state.token");
-          console.log(this.state.token);
-          commit("setUserEmail", credentials.email); // Save the user's email
+          // Set isAuthenticated to true
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${this.state.token}`;
+          commit("setAuthentication", true);
+          // Save the JWT token
+          commit("setToken", response.data.token);
+          // Save the user's email
+          commit("setUserEmail", credentials.email);
         })
         .catch((error) => {
-          commit("setAuthentication", false); // Set isAuthenticated to false on error
+          // Set isAuthenticated to false on error
+          commit("setAuthentication", false);
           console.error("Login failed:", error);
         });
     },
