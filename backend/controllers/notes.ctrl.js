@@ -40,9 +40,25 @@ exports.getNoteById = async (req, res) => {
 
 exports.updateNote = async (req, res) => {
   try {
-    const updatedNote = await Note.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    console.log("testup");
+    const { title, content } = req.body;
+    const updateObject = {};
+
+    if (title) {
+      updateObject.title = title;
+    }
+
+    if (content) {
+      updateObject.content = content;
+    }
+    const updatedNote = await Note.findByIdAndUpdate(
+      req.params.note_id,
+      updateObject,
+      {
+        new: true,
+      }
+    ).select("_id name content");
+    console.log(updatedNote);
     res.status(200).json(updatedNote);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -51,7 +67,7 @@ exports.updateNote = async (req, res) => {
 
 exports.deleteNote = async (req, res) => {
   try {
-    await Note.findByIdAndDelete(req.params.id);
+    await Note.findByIdAndDelete(req.params.note_id);
     res.status(200).json({ message: "Note deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
