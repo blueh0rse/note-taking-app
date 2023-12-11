@@ -19,8 +19,8 @@ export default {
     return axios.get(`${API}/notes`);
   },
   // To change note_id for edit and delete
-  edit_note(noteData) {
-    return axios.put(`${API}/notes/${noteData.id}`, { noteData });
+  edit_note(noteId, noteData) {
+    return axios.put(`${API}/notes/${noteId}`, { name: noteData.name, content: noteData.content });
   },
   deleteNote(noteId) {
     console.log("deleteNote method entered")

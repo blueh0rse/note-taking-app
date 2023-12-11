@@ -78,7 +78,7 @@ export default {
                     this.createNoteMessage = 'Notes fetched successfully.';
                 } else {
                     // Handle unexpected response status codes (e.g., 404, 500)
-                    this.createNoteMessage = `Failed to fetch notes. Server returned status code ${response.status}.`;
+                    this.createNoteMessage = `Failed to fetch notes. Server returned status code ${response.message}.`;
                 }
             } catch (error) {
                 this.createNoteMessage = `Failed to fetch notes: ${error.message}`;
@@ -153,14 +153,13 @@ export default {
                 this.createNoteMessage = 'Editing note...';
 
                 // Construct the noteData object
+                const noteId = this.editingNote._id
                 const noteData = {
-                    id: this.editingNote._id,
                     name: this.editingNote.name,
-                    content: this.editingNote.content,
-                    ownerId: this.editingNote.ownerId,
+                    content: this.editingNote.content, // Remove the array brackets
                 };
 
-                const response = await authService.edit_note(noteData);
+                const response = await authService.edit_note(noteId, noteData);
                 console.log(response);
 
                 // Update the note in the 'notes' array
@@ -201,7 +200,7 @@ export default {
                 if (noteIndex !== -1) {
                     this.notes.splice(noteIndex, 1);
                 }
-
+                this.fetchNotes();
                 // Reset the editingNote
                 this.editingNote = null;
 
