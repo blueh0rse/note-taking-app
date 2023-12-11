@@ -79,25 +79,33 @@ export default {
   },
   methods: {
     async login() {
-      try {
-        this.$store.dispatch('login', {
-          email: this.email, // The email input from the form
-          password: this.password // The password input from the form
-        }).then(() => {
-          // Redirect after a successful login
-          this.$router.push({ path: '/dashboard' }); // Redirect to the dashboard or a route of your choice
-        }).catch((error) => {
-          // Handle the login error, e.g., show an error message
-          console.error("Login failed:", error);
-        });
-        // const response = await authService.login(this.email, this.password);
-        // this.loginError = ''; // Clear any previous error
-        // this.$store.commit('setUser', response.data.user); // Update Vuex store
-        // this.$router.push('/dashboard'); // Redirect to dashboard
-      } catch (error) {
-        this.loginError = 'Failed to login. ' + error.message;
-      }
-    },
+  try {
+    const response = await authService.login(this.email, this.password);
+
+    if (response.status === 200) {
+      // Login successful
+      const token = response.data.token;
+
+      // Update Vuex store with authentication status and token
+      this.$store.commit('setAuthentication', true);
+      this.$store.commit('setToken', token);
+
+      // Redirect to the dashboard if the user is authenticated
+      this.$router.push({ path: '/dashboard' });
+    } else {
+      // Handle unexpected response status codes
+      this.loginError = `Failed to login. Server returned status code ${response.status}.`;
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      // Unauthorized error (status code 401)
+      this.loginError = 'Incorrect email or password. Please try again.';
+    } else {
+      // Handle any other errors that may occur during login
+      this.loginError = 'Failed to login. ' + error.message;
+    }
+  }
+},
     async signup() {
       if (this.signupPassword !== this.signupPasswordConfirm) {
         this.signupError = 'Passwords do not match.';
