@@ -43,6 +43,11 @@ exports.updateNote = async (req, res) => {
     console.log("testup");
     const { title, content } = req.body;
     const updateObject = {};
+    const noteId = req.params.note_id;
+
+    if (!noteId) {
+      res.status(400).json({ message: "Bad request!" });
+    }
 
     if (title) {
       updateObject.title = title;
@@ -51,13 +56,9 @@ exports.updateNote = async (req, res) => {
     if (content) {
       updateObject.content = content;
     }
-    const updatedNote = await Note.findByIdAndUpdate(
-      req.params.note_id,
-      updateObject,
-      {
-        new: true,
-      }
-    ).select("_id name content");
+    const updatedNote = await Note.findByIdAndUpdate(noteId, updateObject, {
+      new: true,
+    }).select("_id name content");
     console.log(updatedNote);
     res.status(200).json(updatedNote);
   } catch (error) {
