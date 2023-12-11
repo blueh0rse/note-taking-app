@@ -1,8 +1,9 @@
 const Note = require("../models/notes.model.js");
+const validator = require("validator");
 
 exports.createNote = async (req, res) => {
   try {
-    const name = req.body.name;
+    const name = validator.escape(req.body.name);
     // check if note has name
     if (!name) {
       return res.status(400).send({ message: "Note has no name." });
@@ -13,7 +14,8 @@ exports.createNote = async (req, res) => {
       return res.status(400).send({ message: "Name already used." });
     }
     // add owner id to new note
-    const newNote = new Note({ name, ownerId: req.user.id });
+    const userId = validator.escape(req.user.id);
+    const newNote = new Note({ name, ownerId: userId });
     // save note
     await newNote.save();
     res.status(201).json({ message: "Note created." });
@@ -40,9 +42,25 @@ exports.getNoteById = async (req, res) => {
 
 exports.updateNote = async (req, res) => {
   try {
-    const updatedNote = await Note.findByIdAndUpdate(req.params.id, req.body, {
+    const { title, content } = validator.escape(req.body);
+    const noteId = validator.escape(req.params.note_id);
+    const updateObject = {};
+
+    if (!noteId) {
+      res.status(400).json({ message: "Bad request!" });
+    }
+
+    if (title) {
+      updateObject.title = title;
+    }
+
+    if (content) {
+      updateObject.content = content;
+    }
+    const updatedNote = await Note.findByIdAndUpdate(noteId, updateObject, {
       new: true,
-    });
+    }).select("_id name content");
+    console.log(updatedNote);
     res.status(200).json(updatedNote);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -51,7 +69,9 @@ exports.updateNote = async (req, res) => {
 
 exports.deleteNote = async (req, res) => {
   try {
-    await Note.findByIdAndDelete(req.params.id);
+    const noteId = validator.escape(req.params.note_id);
+
+    await Note.findByIdAndDelete(noteId);
     res.status(200).json({ message: "Note deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });

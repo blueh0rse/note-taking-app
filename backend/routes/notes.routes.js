@@ -39,7 +39,7 @@ router.put(
   auth.verifyToken,
   auth.verifyValidity,
   auth.verifyRole("user"),
-  auth.verifyPermissions,
+  auth.verifyPermissions(Note, "ownerId"),
   noteController.updateNote
 );
 
@@ -49,7 +49,7 @@ router.delete(
   auth.verifyToken,
   auth.verifyValidity,
   auth.verifyRole("user"),
-  auth.verifyPermissions,
+  auth.verifyPermissions(Note, "ownerId"),
   noteController.deleteNote
 );
 

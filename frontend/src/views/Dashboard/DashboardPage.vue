@@ -27,41 +27,80 @@
             </div>
         </div>
 
-        <p class="message">{{ createNoteMessage }}</p>
+    <div v-else class="notes-list">
+      <div v-for="note in notes" :key="note.id" class="note-item">
+        <h3 @click="selectNoteForEdit(note)">{{ note.title }}</h3>
+        <!-- Additional note details can be shown here -->
+      </div>
     </div>
+
+    <p class="message">{{ createNoteMessage }}</p>
+  </div>
 </template>
-  
-  
+
+
 <script>
 import DashboardNavbar from '@/components/DashboardNavbar.vue';
 // import apiService from '@/services/apiService.js';
 import axios from 'axios';
 import store from "../../store/index";
 import authService from '@/services/authService';
-
-
-
+const API = store.state.API_URL;
 export default {
-    name: 'DashboardPage',
-    components: {
-        DashboardNavbar,
+  name: 'DashboardPage',
+  components: {
+    DashboardNavbar,
+  },
+  data() {
+    return {
+      //notes: [],
+      notes: [
+        { id: 1, title: 'Note Example', content: 'Content for note 1' },
+        // Add as many mock notes as needed for testing
+      ],
+      newNoteTitle: '',
+      createNoteMessage: '',
+      selectedNote: null,
+      isCreateNoteVisible: false,
+      editingNote: null,
+    };
+  },
+  mounted() {
+    this.fetchNotes(); // Fetch notes when the component is mounted
+  },
+  methods: {
+    async fetchNotes() {
+      try {
+        this.createNoteMessage = 'Fetching notes...';
+        const response = await authService.fetch_notes();
+        // Check if the response status code indicates success (e.g., 200)
+        if (response.status === 200) {
+          // Update your notes data here
+          this.notes = response.data;
+          this.createNoteMessage = 'Notes fetched successfully.';
+        } else {
+          // Handle unexpected response status codes (e.g., 404, 500)
+          this.createNoteMessage = `Failed to fetch notes. Server returned status code ${response.status}.`;
+        }
+      } catch (error) {
+        this.createNoteMessage = `Failed to fetch notes: ${error.message}`;
+      }
     },
-    data() {
-        return {
-            //notes: [],
-            notes: [
-                { id: 1, title: 'Note Example', content: 'Content for note 1' },
-                // Add as many mock notes as needed for testing
-            ],
-            newNoteTitle: '',
-            createNoteMessage: '',
-            selectedNote: null,
-            isCreateNoteVisible: false,
-            editingNote: null,
-        };
+    showNotesList() {
+      // TODO
+      this.isCreateNoteVisible = false;
+      this.newNoteTitle = '';
+      this.createNoteMessage = '';
+      this.selectedNote = null;
+      this.editingNote = null;
     },
-    mounted() {
-        this.fetchNotes(); // Fetch notes when the component is mounted
+    selectNoteForEdit(note) {
+      if (note) {
+        this.editingNote = JSON.parse(JSON.stringify(note));
+      } else {
+        // Handle the error, e.g., note not found
+        this.createNoteMessage = 'Error: Note not found.';
+      }
     },
     methods: {
         async fetchNotes() {
@@ -215,11 +254,11 @@ export default {
             this.$store.commit('setToken', null);
             this.$store.commit('setUserEmail', null);
 
-            // Redirect to the login page
-            this.$router.push('/');
+      // Redirect to the login page
+      this.$router.push('/');
 
-        },
-    }
+    },
+  }
 }
 </script>
 
