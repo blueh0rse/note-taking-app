@@ -20,10 +20,17 @@ export default {
   },
   // To change note_id for edit and delete
   edit_note(noteData) {
-    return axios.put(`${API}/notes/:note_id`, {noteData});
+    return axios.put(`${API}/notes/${noteData.id}`, { noteData });
   },
-  delete_note(noteData) {
-    return axios.delete(`${API}/notes/:note_id`, {noteData})
+  deleteNote(noteId) {
+    console.log("deleteNote method entered")
+    console.log("noteId: ", noteId)
+
+    // Construct the URL using the noteId
+    const url = `${API}/notes/${noteId}`;
+    console.log("URL to backend: ", url)
+    // Make the DELETE request
+    return axios.delete(url);
   },
   test() {
     return axios.get(`${API}/`);
