@@ -10,7 +10,7 @@ export default new Vuex.Store({
     isAuthenticated: false,
     token: null, // Add a state property for the JWT token
     userEmail: null, // Add a state property for the user email
-    // other state properties
+    signupSuccessMessage: '',
   },
   mutations: {
     setAuthentication(state, status) {
@@ -22,6 +22,9 @@ export default new Vuex.Store({
     },
     setUserEmail(state, email) {
       state.userEmail = email;
+    },
+    setSignupSuccessMessage(state, message) {
+      state.signupSuccessMessage = message;
     },
     // other mutations
   },
@@ -46,7 +49,12 @@ export default new Vuex.Store({
     },
     // other actions
   },
-  // getters and other store parts
+  getters: {
+    // ... other getters
+    getSignupSuccessMessage(state) {
+      return state.signupSuccessMessage;
+    },
+  },
 });
 
 <script></script>;

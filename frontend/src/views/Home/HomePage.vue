@@ -21,6 +21,7 @@
 
     <!-- "Sign Up" Button (Switch to Sign Up mode) -->
     <button @click="showSignupForm(); resetLoginForm()" v-if="!isSignupVisible">Sign Up</button>
+    <p v-if="signupSuccessMessage" class="success">{{ signupSuccessMessage }}</p>
   </div>
 
   <!-- Sign Up Form -->
@@ -32,7 +33,8 @@
       <div class="password-input">
         <input :type="showSignupPassword ? 'text' : 'password'" v-model="signupPassword" placeholder="Password"
           required />
-        <input :type="showSignupPassword ? 'text' : 'password'" v-model="signupPasswordConfirm" placeholder="Confirm Password" required />
+        <input :type="showSignupPassword ? 'text' : 'password'" v-model="signupPasswordConfirm"
+          placeholder="Confirm Password" required />
         <!-- Button to toggle password visibility -->
         <button type="button" @click.prevent="showSignupPassword = !showSignupPassword" class="toggle-password-btn">
           {{ showSignupPassword ? 'Hide' : 'Show' }} Passwords
@@ -52,6 +54,7 @@
 <script>
 import authService from '@/services/authService';
 
+
 export default {
   data() {
     return {
@@ -67,6 +70,12 @@ export default {
       showSignupPassword: false, // Initial state for showing/hiding password in sign-up form
       signupError: '',
     };
+  },
+  computed: {
+    signupSuccessMessage() {
+      // Assuming you have a getter named getSignupSuccessMessage in your Vuex store
+      return this.$store.getters.getSignupSuccessMessage;
+    },
   },
   methods: {
     async login() {
@@ -96,10 +105,23 @@ export default {
       }
       try {
         const response = await authService.signup(this.signupEmail, this.signupPassword);
-        console.log(response)
 
-        // in response.data.message you have the message
+        // Check if the signup was successful
+        if (response.status === 201) {
+          // Clear any previous error and set a success message
+          this.signupError = '';
+          this.$store.commit('setSignupSuccessMessage', 'Signup successful. You can now log in.');
 
+          // Reset the signup form fields
+          this.signupUsername = '';
+          this.signupEmail = '';
+          this.signupPassword = '';
+          this.signupPasswordConfirm = '';
+          this.isSignupVisible = false; // Hide the signup form
+        } else {
+          // Handle unexpected response status codes (e.g., 404, 500)
+          this.signupError = `Failed to sign up. Server returned status code ${response.status}.`;
+        }
       } catch (error) {
         this.signupError = 'Failed to sign up. ' + error.message;
       }
