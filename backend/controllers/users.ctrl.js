@@ -11,7 +11,8 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUserById = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).select("email role");
+    const userId = validator.escape(req.params.id);
+    const user = await User.findById(userId).select("email role");
     if (!user) res.status(404).json({ message: "User not found!" });
     res.status(200).json(user);
   } catch (error) {
@@ -23,10 +24,11 @@ exports.updateUser = async (req, res) => {
   try {
     const emailValidationRegex =
       /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    const new_email = req.body.email;
-    const userId = req.params.id;
+    const new_email = validator.escape(req.body.email);
+    const userId = validator.escape(req.params.id);
 
     if (!userId) {
+      return res.status(401).send({ message: "Bad request" });
     }
 
     if (new_email) {
@@ -49,7 +51,8 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
+    const userId = validator.escape(req.params.id);
+    await User.findByIdAndDelete(userId);
     res.status(200).json({ message: "User deleted!" });
   } catch (error) {
     res.status(500).json({ message: error.message });
