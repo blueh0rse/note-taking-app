@@ -1,6 +1,4 @@
 import Vuex from "vuex";
-import axios from "axios";
-
 /*const state = {
   // Define initial application state
 };*/
@@ -8,14 +6,13 @@ import axios from "axios";
 export default new Vuex.Store({
   state: {
     isAuthenticated: false,
-    token: null,
-    userEmail: null,
-    API_URL: process.env.VUE_APP_API_URL,
+    token: null, // Add a state property for the JWT token
+    userEmail: null, // Add a state property for the user email
+    signupSuccessMessage: '',
   },
   mutations: {
     setAuthentication(state, status) {
       state.isAuthenticated = status;
-      console.log("STATE:" + state.isAuthenticated);
     },
     setToken(state, token) {
       state.token = token;
@@ -23,33 +20,17 @@ export default new Vuex.Store({
     setUserEmail(state, email) {
       state.userEmail = email;
     },
+    setSignupSuccessMessage(state, message) {
+      state.signupSuccessMessage = message;
+    },
     // other mutations
   },
-  actions: {
-    login({ commit }, credentials) {
-      // Perform login
-      axios
-        .post(this.state.API_URL + "/login", credentials)
-        .then((response) => {
-          // Set isAuthenticated to true
-          axios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${this.state.token}`;
-          commit("setAuthentication", true);
-          // Save the JWT token
-          commit("setToken", response.data.token);
-          // Save the user's email
-          commit("setUserEmail", credentials.email);
-        })
-        .catch((error) => {
-          // Set isAuthenticated to false on error
-          commit("setAuthentication", false);
-          console.error("Login failed:", error);
-        });
+  getters: {
+    // ... other getters
+    getSignupSuccessMessage(state) {
+      return state.signupSuccessMessage;
     },
-    // other actions
   },
-  // getters and other store parts
 });
 
 <script></script>;

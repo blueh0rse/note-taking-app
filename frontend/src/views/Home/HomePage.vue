@@ -21,6 +21,7 @@
 
     <!-- "Sign Up" Button (Switch to Sign Up mode) -->
     <button @click="showSignupForm(); resetLoginForm()" v-if="!isSignupVisible">Sign Up</button>
+    <p v-if="signupSuccessMessage" class="success">{{ signupSuccessMessage }}</p>
   </div>
 
   <!-- Sign Up Form -->
@@ -32,7 +33,8 @@
       <div class="password-input">
         <input :type="showSignupPassword ? 'text' : 'password'" v-model="signupPassword" placeholder="Password"
           required />
-        <input :type="showSignupPassword ? 'text' : 'password'" v-model="signupPasswordConfirm" placeholder="Confirm Password" required />
+        <input :type="showSignupPassword ? 'text' : 'password'" v-model="signupPasswordConfirm"
+          placeholder="Confirm Password" required />
         <!-- Button to toggle password visibility -->
         <button type="button" @click.prevent="showSignupPassword = !showSignupPassword" class="toggle-password-btn">
           {{ showSignupPassword ? 'Hide' : 'Show' }} Passwords
@@ -52,6 +54,7 @@
 <script>
 import authService from '@/services/authService';
 
+
 export default {
   data() {
     return {
@@ -68,21 +71,41 @@ export default {
       signupError: '',
     };
   },
+  computed: {
+    signupSuccessMessage() {
+      // Assuming you have a getter named getSignupSuccessMessage in your Vuex store
+      return this.$store.getters.getSignupSuccessMessage;
+    },
+  },
   methods: {
     async login() {
-      try {
-        this.$store.dispatch('login', {
-          email: this.email,
-          password: this.password 
-        }).then(() => {
-          this.$router.push({ path: '/dashboard' });
-        }).catch((error) => {
-          console.error("Login failed:", error);
-        });
-      } catch (error) {
-        this.loginError = 'Failed to login. ' + error.message;
-      }
-    },
+  try {
+    const response = await authService.login(this.email, this.password);
+
+    if (response.status === 200) {
+      // Login successful
+      const token = response.data.token;
+
+      // Update Vuex store with authentication status and token
+      this.$store.commit('setAuthentication', true);
+      this.$store.commit('setToken', token);
+
+      // Redirect to the dashboard if the user is authenticated
+      this.$router.push({ path: '/dashboard' });
+    } else {
+      // Handle unexpected response status codes
+      this.loginError = `Failed to login. Server returned status code ${response.status}.`;
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      // Unauthorized error (status code 401)
+      this.loginError = 'Incorrect email or password. Please try again.';
+    } else {
+      // Handle any other errors that may occur during login
+      this.loginError = 'Failed to login. ' + error.message;
+    }
+  }
+},
     async signup() {
       if (this.signupPassword !== this.signupPasswordConfirm) {
         this.signupError = 'Passwords do not match.';
@@ -90,10 +113,23 @@ export default {
       }
       try {
         const response = await authService.signup(this.signupEmail, this.signupPassword);
-        console.log(response)
 
-        // in response.data.message you have the message
+        // Check if the signup was successful
+        if (response.status === 201) {
+          // Clear any previous error and set a success message
+          this.signupError = '';
+          this.$store.commit('setSignupSuccessMessage', 'Signup successful. You can now log in.');
 
+          // Reset the signup form fields
+          this.signupUsername = '';
+          this.signupEmail = '';
+          this.signupPassword = '';
+          this.signupPasswordConfirm = '';
+          this.isSignupVisible = false; // Hide the signup form
+        } else {
+          // Handle unexpected response status codes (e.g., 404, 500)
+          this.signupError = `Failed to sign up. Server returned status code ${response.status}.`;
+        }
       } catch (error) {
         this.signupError = 'Failed to sign up. ' + error.message;
       }
