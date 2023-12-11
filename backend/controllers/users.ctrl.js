@@ -21,17 +21,23 @@ exports.getUserById = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   try {
+    const emailValidationRegex =
+      /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const new_email = req.body.email;
+    const userId = req.params.id;
+
+    if (!userId) {
+    }
+
     if (new_email) {
+      if (emailValidationRegex.test(new_email)) {
+        return res.status(401).send({ message: "Bad request" });
+      }
       const new_user = {};
       new_user.email = new_email;
-      const updatedUser = await User.findByIdAndUpdate(
-        req.params.id,
-        new_user,
-        {
-          new: true,
-        }
-      ).select("email");
+      const updatedUser = await User.findByIdAndUpdate(userId, new_user, {
+        new: true,
+      }).select("email");
       res.status(200).json(updatedUser);
     } else {
       return res.status(401).send({ message: "Bad request" });
