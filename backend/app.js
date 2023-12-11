@@ -32,7 +32,7 @@ const limiter = rateLimit({
   max: 100, // 100/min
 });
 
-// Enable CORS with the above options for all routes
+// Enable CORS for all routes
 app.use(cors(corsOptions));
 
 app.use(express.json());
@@ -45,12 +45,12 @@ app.get("/", (req, res) => {
 const authRoutes = require("./routes/auth.routes.js");
 const usersRoutes = require("./routes/users.routes.js");
 const notesRoutes = require("./routes/notes.routes.js");
-const groupsRoutes = require("./routes/groups.routes.js");
+// const groupsRoutes = require("./routes/groups.routes.js");
 
 app.use("/", limiter, authRoutes);
 app.use("/users", limiter, usersRoutes);
 app.use("/notes", limiter, notesRoutes);
-app.use("/groups", limiter, groupsRoutes);
+// app.use("/groups", limiter, groupsRoutes);
 
 const httpsOptions = {
   ca: cacert,

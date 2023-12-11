@@ -1,15 +1,16 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
 
 // checks if token exists in the Authorization Bearer Header
 exports.verifyToken = (req, res, next) => {
-  console.log("test");
+  console.log("[LOG] Token verification...");
   const token = req.headers.authorization?.split(" ")[1];
   if (!token) {
+    console.log("[NOK] Token missing");
     return res.status(401).json({ message: "Access denied 1" });
   } else {
     req.token = token;
+    console.log("[OK] Token provided");
     next();
   }
 };
@@ -17,11 +18,12 @@ exports.verifyToken = (req, res, next) => {
 // checks if token is not invalid/expired
 exports.verifyValidity = (req, res, next) => {
   try {
-    console.log("test2");
     const decoded = jwt.verify(req.token, process.env.JWT_SECRET);
     req.user = decoded;
+    console.log("[OK] Token valid");
     next();
   } catch (error) {
+    console.log("[NOK] Token invalid");
     return res.status(403).json({ message: "Access denied 2" });
   }
 };
@@ -29,7 +31,6 @@ exports.verifyValidity = (req, res, next) => {
 // checks if user has required role
 exports.verifyRole = (requiredRole) => {
   return (req, res, next) => {
-    console.log("test3");
     if (req.user.role === requiredRole) {
       next();
     } else {
