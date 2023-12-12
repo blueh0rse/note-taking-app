@@ -8,6 +8,10 @@ exports.createNote = async (req, res) => {
     if (!name) {
       return res.status(400).send({ message: "Note has no name." });
     }
+    const isNameValid = /^[a-zA-Z0-9\s]{1,30}$/;
+    if (!isNameValid.test(name)) {
+      return res.status(400).send({ message: "Invalid name format or length." });
+    }
     // check if note with same name exits
     const nameExists = await Note.findOne({ name });
     if (nameExists) {
