@@ -228,8 +228,8 @@ export default {
             this.$store.commit('setToken', null);
             this.$store.commit('setUserEmail', null);
 
-            // Redirect to the login page
-            this.$router.push('/');
+      // Redirect to the login page
+      this.$router.push('/');
 
         },
     }
