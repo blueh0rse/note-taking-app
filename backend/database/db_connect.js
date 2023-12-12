@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 
 // Read the TLS certificate, private key, and CA certificate
-const cert = fs.readFileSync("./certificates/mongodb.crt");
-const key = fs.readFileSync("./certificates/mongodb.key");
-const ca = fs.readFileSync("./certificates/cacert.pem");
+//const cert = fs.readFileSync("./certificates/mongodb.crt");
+//const key = fs.readFileSync("./certificates/mongodb.key");
+//const ca = fs.readFileSync("./certificates/cacert.pem");
 
 mongoose
   .connect(process.env.DB_KEY, {

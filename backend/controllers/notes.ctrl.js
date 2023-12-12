@@ -8,6 +8,10 @@ exports.createNote = async (req, res) => {
     if (!name) {
       return res.status(400).send({ message: "Note has no name." });
     }
+    const isNameValid = /^[a-zA-Z0-9\s]{1,30}$/;
+    if (!isNameValid.test(name)) {
+      return res.status(400).send({ message: "Invalid name format or length." });
+    }
     // check if note with same name exits
     const nameExists = await Note.findOne({ name });
     if (nameExists) {
@@ -42,7 +46,8 @@ exports.getNoteById = async (req, res) => {
 
 exports.updateNote = async (req, res) => {
   try {
-    const { title, content } = validator.escape(req.body);
+    console.log(req.body)
+    const { name, content } = (req.body);
     const noteId = validator.escape(req.params.note_id);
     const updateObject = {};
 
@@ -50,13 +55,15 @@ exports.updateNote = async (req, res) => {
       res.status(400).json({ message: "Bad request!" });
     }
 
-    if (title) {
-      updateObject.title = title;
+    if (name) {
+      updateObject.name = name;
     }
 
     if (content) {
       updateObject.content = content;
     }
+    console.log(updateObject)
+
     const updatedNote = await Note.findByIdAndUpdate(noteId, updateObject, {
       new: true,
     }).select("_id name content");

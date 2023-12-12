@@ -12,10 +12,10 @@
         <div v-else-if="editingNote" class="edit-note-form">
             <h2>Edit Note</h2>
             <form>
-                <input type="text" v-model="editingNote.title" required />
+                <input type="text" v-model="editingNote.name" required />
                 <textarea v-model="editingNote.content"></textarea>
                 <button type="button" @click="cancelEdit" class="custom-button cancel-button">Cancel</button>
-                <button @click="updateNote" type="submit" class="custom-button update-button">Update Note</button>
+                <button @click="updateNote" type="button" class="custom-button update-button">Update Note</button>
                 <button @click="deleteNote" type="button" class="custom-button delete-button">Delete Note</button>
             </form>
         </div>
@@ -27,80 +27,41 @@
             </div>
         </div>
 
-    <div v-else class="notes-list">
-      <div v-for="note in notes" :key="note.id" class="note-item">
-        <h3 @click="selectNoteForEdit(note)">{{ note.title }}</h3>
-        <!-- Additional note details can be shown here -->
-      </div>
+        <p class="message">{{ createNoteMessage }}</p>
     </div>
-
-    <p class="message">{{ createNoteMessage }}</p>
-  </div>
 </template>
-
-
+  
+  
 <script>
 import DashboardNavbar from '@/components/DashboardNavbar.vue';
 // import apiService from '@/services/apiService.js';
 import axios from 'axios';
 import store from "../../store/index";
 import authService from '@/services/authService';
-const API = store.state.API_URL;
+
+
+
 export default {
-  name: 'DashboardPage',
-  components: {
-    DashboardNavbar,
-  },
-  data() {
-    return {
-      //notes: [],
-      notes: [
-        { id: 1, title: 'Note Example', content: 'Content for note 1' },
-        // Add as many mock notes as needed for testing
-      ],
-      newNoteTitle: '',
-      createNoteMessage: '',
-      selectedNote: null,
-      isCreateNoteVisible: false,
-      editingNote: null,
-    };
-  },
-  mounted() {
-    this.fetchNotes(); // Fetch notes when the component is mounted
-  },
-  methods: {
-    async fetchNotes() {
-      try {
-        this.createNoteMessage = 'Fetching notes...';
-        const response = await authService.fetch_notes();
-        // Check if the response status code indicates success (e.g., 200)
-        if (response.status === 200) {
-          // Update your notes data here
-          this.notes = response.data;
-          this.createNoteMessage = 'Notes fetched successfully.';
-        } else {
-          // Handle unexpected response status codes (e.g., 404, 500)
-          this.createNoteMessage = `Failed to fetch notes. Server returned status code ${response.status}.`;
-        }
-      } catch (error) {
-        this.createNoteMessage = `Failed to fetch notes: ${error.message}`;
-      }
+    name: 'DashboardPage',
+    components: {
+        DashboardNavbar,
     },
-    showNotesList() {
-      // TODO
-      this.isCreateNoteVisible = false;
-      this.newNoteTitle = '';
-      this.createNoteMessage = '';
-      this.selectedNote = null;
-      this.editingNote = null;
+    data() {
+        return {
+            //notes: [],
+            notes: [
+                { ownerId: 1, name: 'Note Example', content: 'Content for note 1' },
+                // Add as many mock notes as needed for testing
+            ],
+            newNoteTitle: '',
+            createNoteMessage: '',
+            selectedNote: null,
+            isCreateNoteVisible: false,
+            editingNote: null,
+        };
     },
-    selectNoteForEdit(note) {
-      if (note) {
-        this.editingNote = JSON.parse(JSON.stringify(note));
-      } else {
-        // Handle the error, e.g., note not found
-        this.createNoteMessage = 'Error: Note not found.';
-      }
+    mounted() {
+        this.fetchNotes(); // Fetch notes when the component is mounted
     },
     methods: {
         async fetchNotes() {
@@ -117,7 +78,7 @@ export default {
                     this.createNoteMessage = 'Notes fetched successfully.';
                 } else {
                     // Handle unexpected response status codes (e.g., 404, 500)
-                    this.createNoteMessage = `Failed to fetch notes. Server returned status code ${response.status}.`;
+                    this.createNoteMessage = `Failed to fetch notes. Server returned status code ${response.message}.`;
                 }
             } catch (error) {
                 this.createNoteMessage = `Failed to fetch notes: ${error.message}`;
@@ -134,12 +95,19 @@ export default {
         },
         selectNoteForEdit(note) {
             if (note) {
-                // this.editingNote = JSON.parse(JSON.stringify(note));
-                this.editingNote = {
-                    title: note.name,
+                this.editingNote = JSON.parse(JSON.stringify(note));
+                /*console.log("PARSE: ", this.editingNote)
+                console.log("NOTE ID: ", this.editingNote._id)
+                console.log("NOTE NAME: ", this.editingNote.name)
+                console.log("OWNER ID: ", this.editingNote.ownerId)
+                console.log("NOTE CONTENT: ", this.editingNote.content)*/
+
+
+                /*this.editingNote = {
+                    name: note.name,
                     content: note.content,
-                    id: note.ownerId // Make sure to include the note's ID if needed for updates
-                };
+                    ownerId: note.ownerId // Make sure to include the note's ID if needed for updates
+                };*/
             } else {
                 // Handle the error, e.g., note not found
                 this.createNoteMessage = 'Error: Note not found.';
@@ -178,37 +146,39 @@ export default {
         },
         async updateNote() {
             try {
-                // join user token everytime I send request
+                // Join user token every time I send a request
                 console.log("store")
                 console.log(store.state)
                 axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
                 this.createNoteMessage = 'Editing note...';
-                const noteData = { name: this.editingNote.title, content: this.editingNote.content };
-                const response = await authService.edit_note(noteData);
-                console.log(response)
+
+                // Construct the noteData object
+                const noteId = this.editingNote._id
+                const noteData = {
+                    name: this.editingNote.name,
+                    content: this.editingNote.content, // Remove the array brackets
+                };
+
+                const response = await authService.edit_note(noteId, noteData);
+                console.log(response);
+
+                // Update the note in the 'notes' array
                 for (let i = 0; i < this.notes.length; i++) {
-                    if (this.notes[i].ownerId === this.editingNote.id) {
-                        // Update the note in the 'notes' array
-                        this.notes[i] = await authService.edit_note(noteData);
+                    if (this.notes[i].ownerId === this.editingNote.ownerId) {
+                        this.notes[i] = response.data; // Update the note with the response data
                         break; // Exit the loop once the note is updated
                     }
                 }
-                // this.notes.push(response.data); // Add new note to notes array
+
                 this.isCreateNoteVisible = false;
                 this.createNoteMessage = 'Note updated successfully.';
             } catch (error) {
                 this.createNoteMessage = `Failed to update note: ${error.message}`;
             }
-            /*const index = this.notes.findIndex(note => note.id === this.editingNote.id);
-            if (index !== -1) {
-                this.notes[index] = { ...this.editingNote };
-                this.editingNote = null;
-                this.createNoteMessage = 'Note updated successfully.';
-            } else {
-                this.createNoteMessage = 'Error: Note not found.';
-            }*/
+
             this.editingNote = null;
         },
+
         // In your Vue.js component
         async deleteNote() {
             if (!confirm('Are you sure you want to delete this note?')) {
@@ -216,17 +186,21 @@ export default {
             }
             console.log("Entered Delete Note method")
             try {
-                console.log("Editing note: ", this.editingNote.id)
+                console.log("store")
+                console.log(store.state)
+                axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
+                this.createNoteMessage = 'Deleting note...';
+                console.log("Editing note: ", this.editingNote._id)
                 // Call the deleteNote method with the note's ID
-                await authService.deleteNote(this.editingNote.id);
+                await authService.deleteNote(this.editingNote._id);
                 console.log("After wait")
 
                 // Handle success, e.g., remove the note from the UI
-                const noteIndex = this.notes.findIndex(note => note.id === this.editingNote.id);
+                const noteIndex = this.notes.findIndex(note => note.id === this.editingNote.ownerId);
                 if (noteIndex !== -1) {
                     this.notes.splice(noteIndex, 1);
                 }
-
+                this.fetchNotes();
                 // Reset the editingNote
                 this.editingNote = null;
 
@@ -257,8 +231,8 @@ export default {
       // Redirect to the login page
       this.$router.push('/');
 
-    },
-  }
+        },
+    }
 }
 </script>
 

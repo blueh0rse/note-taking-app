@@ -1,7 +1,9 @@
 import axios from "axios";
-import store from "../store/index";
+// secret management
+// require("dotenv").config();
 
-const API = store.state.API_URL;
+// const API = `${process.env.API_URL}:${process.env.API_PORT}`;
+const API = "https://localhost:3000"; // BACKEND
 
 export default {
   login(email, password) {
@@ -16,8 +18,9 @@ export default {
   fetch_notes() {
     return axios.get(`${API}/notes`);
   },
-  edit_note(noteData) {
-    return axios.put(`${API}/notes/${noteData.id}`, { noteData });
+  // To change note_id for edit and delete
+  edit_note(noteId, noteData) {
+    return axios.put(`${API}/notes/${noteId}`, { name: noteData.name, content: noteData.content });
   },
   deleteNote(noteId) {
     console.log("deleteNote method entered")
