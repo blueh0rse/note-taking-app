@@ -16,8 +16,10 @@ When everything is correctly installed, these commands should be sufficient:
 
 ````bash
 $ cd note-taking-app/backend
-# run database
+# run database using mongod
 $ sudo mongod --dbpath ~/data/db --config ./database/mongo.conf
+# or run database using docker
+$ sudo docker run -d -v /home/webserver/note-taking-app/backend/database/mongo.conf:/etc/mongo.conf -p 27017:27017 --name mongo5 mongo:4.4.6
 # run server
 $ node app.js
 ````
