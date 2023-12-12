@@ -7,11 +7,12 @@ require("dotenv").config();
 require("./database/db_connect.js");
 
 const cors = require("cors");
-// const http = require("http");
 const https = require("https");
 const express = require("express");
 const fs = require("fs");
 const rateLimit = require("express-rate-limit");
+const morgan = require('morgan');
+const path = require('path');
 const app = express();
 
 const cacert = fs.readFileSync("./certificates/cacert.pem");
@@ -26,14 +27,23 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
+// Enable CORS for all routes
+app.use(cors(corsOptions));
+
 // Rate limit
 const limiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 100, // 100/min
 });
 
-// Enable CORS for all routes
-app.use(cors(corsOptions));
+// Define a stream for Morgan to write logs to (optional)
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'webserver.log'), { flags: 'a' });
+
+// Create a combined log format (you can customize this)
+const logFormat = ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]';
+
+// Use Morgan middleware to log requests to console (and optionally to a file)
+app.use(morgan(logFormat, { stream: accessLogStream }));
 
 app.use(express.json());
 
